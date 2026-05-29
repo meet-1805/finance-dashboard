@@ -12,7 +12,8 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.expense-form input {
+.expense-form input,
+select.category-select {
   padding: 14px;
   border: none;
   border-radius: 8px;

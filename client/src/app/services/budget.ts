@@ -77,4 +77,8 @@ export class BudgetService {
       })
     );
   }
+
+  getCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${API_BASE_URL}/budgets/categories`);
+  }
 }

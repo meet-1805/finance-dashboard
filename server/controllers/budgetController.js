@@ -2,6 +2,43 @@ const Budget = require('../models/Budget');
 const Expense = require('../models/Expense');
 const mongoose = require('mongoose');
 
+const PREDEFINED_CATEGORIES = [
+    'Food', 'Travel', 'Shopping', 'Entertainment', 'Medical', 
+    'Education', 'Bills', 'Rent', 'Utilities', 'Other'
+];
+
+// @desc    Get all unique categories (predefined + user custom)
+// @route   GET /api/budgets/categories
+// @access  Private
+exports.getCategories = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        
+        // Find all distinct categories created by the user in their budgets
+        const userBudgets = await Budget.find({ userId }).select('category');
+        const userCategories = userBudgets.map(b => b.category);
+
+        // Combine predefined and user categories
+        const combined = [...PREDEFINED_CATEGORIES, ...userCategories];
+
+        // Deduplicate (case-insensitive) and sort
+        const uniqueCategoriesMap = new Map();
+        combined.forEach(cat => {
+            const lower = cat.trim().toLowerCase();
+            if (!uniqueCategoriesMap.has(lower)) {
+                // Keep the original casing of the first encountered string
+                uniqueCategoriesMap.set(lower, cat.trim());
+            }
+        });
+
+        const finalCategories = Array.from(uniqueCategoriesMap.values()).sort((a, b) => a.localeCompare(b));
+
+        res.status(200).json(finalCategories);
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
+
 // @desc    Get all budgets with utilization calculation
 // @route   GET /api/budgets
 // @access  Private
@@ -18,7 +55,7 @@ exports.getBudgets = async (req, res) => {
         // Fetch all expenses for the user in the current month
         const expenses = await Expense.find({
             userId,
-            date: { $gte: startOfMonth, $lte: endOfMonth }
+            createdAt: { $gte: startOfMonth, $lte: endOfMonth }
         });
 
         // Calculate utilization for each budget

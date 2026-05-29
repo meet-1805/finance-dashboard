@@ -6,6 +6,7 @@ import {
   Transaction,
   TransactionService
 } from '../../services/transaction';
+import { BudgetService } from '../../services/budget';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
 
 @Component({
@@ -23,10 +24,12 @@ export class Expenses implements OnInit {
 
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
+  private budgetService = inject(BudgetService);
 
   title = '';
   amount = 0;
   category = '';
+  categories: string[] = [];
   errorMessage = '';
   editingId = '';
 
@@ -40,6 +43,16 @@ export class Expenses implements OnInit {
     this.transactionService.loadExpenses().subscribe({
       error: (err) => {
         this.errorMessage = err.error?.message || 'Could not load expenses.';
+      }
+    });
+
+    // Load dynamic categories
+    this.budgetService.getCategories().subscribe({
+      next: (cats) => {
+        this.categories = cats;
+      },
+      error: (err) => {
+        console.error('Failed to load categories', err);
       }
     });
   }
