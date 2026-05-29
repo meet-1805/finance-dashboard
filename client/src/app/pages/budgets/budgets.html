@@ -1,0 +1,72 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    <h1>Budget Management</h1>
+
+    <div class="expense-form">
+      <input
+        type="text"
+        placeholder="Category (e.g. Food)"
+        [(ngModel)]="category"
+        [disabled]="editingId !== ''"
+      >
+      <input
+        type="number"
+        placeholder="Monthly Limit"
+        [(ngModel)]="monthlyLimit"
+      >
+      <button (click)="saveBudget()">
+        {{ editingId ? 'Update Limit' : 'Set Budget' }}
+      </button>
+      <button
+        class="secondary-btn"
+        *ngIf="editingId"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <div class="budget-card" *ngFor="let budget of budgets" [ngClass]="budget.status.toLowerCase()">
+      <div class="budget-header">
+        <h2>{{ budget.category }}</h2>
+        <div class="budget-actions">
+          <button class="edit-btn" (click)="startEdit(budget)">Edit</button>
+          <button class="delete-btn" (click)="deleteBudget(budget._id)">Delete</button>
+        </div>
+      </div>
+
+      <div class="budget-stats">
+        <div>
+          <p>Limit</p>
+          <h3>Rs {{ budget.monthlyLimit }}</h3>
+        </div>
+        <div>
+          <p>Spent</p>
+          <h3>Rs {{ budget.amountSpent }}</h3>
+        </div>
+        <div>
+          <p>Remaining</p>
+          <h3>Rs {{ budget.remainingBudget }}</h3>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div 
+          class="progress-bar" 
+          [style.width.%]="budget.usagePercentage > 100 ? 100 : budget.usagePercentage"
+          [ngClass]="budget.status.toLowerCase()"
+        ></div>
+      </div>
+      <div class="progress-labels">
+        <span>{{ budget.usagePercentage }}% Used</span>
+        <span class="status-badge" [ngClass]="budget.status.toLowerCase()">{{ budget.status }}</span>
+      </div>
+    </div>
+  </div>
+</div>

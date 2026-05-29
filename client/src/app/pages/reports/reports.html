@@ -1,0 +1,57 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="reports-container">
+
+    <h1>Financial Reports</h1>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <div class="summary-grid">
+      <div>
+        <span>Total Income</span>
+        <strong>Rs {{ totalIncome() }}</strong>
+      </div>
+
+      <div>
+        <span>Total Expenses</span>
+        <strong>Rs {{ totalExpenses() }}</strong>
+      </div>
+
+      <div>
+        <span>Balance</span>
+        <strong>Rs {{ currentBalance() }}</strong>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+
+      <div class="chart-card">
+        <h2>Finance Overview</h2>
+
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [type]="barChartType">
+        </canvas>
+
+      </div>
+
+      <div class="chart-card">
+        <h2>Expenses by Category</h2>
+
+        <canvas
+          baseChart
+          [data]="categoryChartData"
+          [type]="doughnutChartType">
+        </canvas>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

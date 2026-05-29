@@ -1,0 +1,83 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+
+    <h1>Income Management</h1>
+
+    <div class="income-form">
+
+      <input
+        type="text"
+        placeholder="Income Title"
+        [(ngModel)]="title"
+      >
+
+      <input
+        type="number"
+        placeholder="Amount"
+        [(ngModel)]="amount"
+      >
+
+      <input
+        type="text"
+        placeholder="Category"
+        [(ngModel)]="category"
+      >
+
+      <button (click)="saveIncome()">
+        {{ editingId ? 'Update Income' : 'Add Income' }}
+      </button>
+
+      <button
+        class="secondary-btn"
+        *ngIf="editingId"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <div
+      class="income-card"
+      *ngFor="let income of incomeList"
+    >
+
+      <div>
+
+        <h2>{{ income.title }}</h2>
+
+        <p>{{ income.category }}</p>
+
+      </div>
+
+      <div class="right-section">
+
+        <h2>Rs {{ income.amount }}</h2>
+
+        <button
+          class="edit-btn"
+          (click)="startEdit(income)"
+        >
+          Edit
+        </button>
+
+        <button
+          class="delete-btn"
+          (click)="deleteIncome(income._id)"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

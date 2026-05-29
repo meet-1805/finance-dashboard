@@ -1,0 +1,62 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+
+    <div class="topbar">
+      <h1>Welcome {{ userName }}</h1>
+    </div>
+
+    <div class="cards">
+
+      <div class="card income">
+        <h3>Total Income</h3>
+        <p>Rs {{ totalIncome() }}</p>
+      </div>
+
+      <div class="card expense">
+        <h3>Total Expenses</h3>
+        <p>Rs {{ totalExpenses() }}</p>
+      </div>
+
+      <div class="card balance">
+        <h3>Current Balance</h3>
+        <p>Rs {{ currentBalance() }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Transactions</h3>
+        <p>{{ totalTransactions() }}</p>
+      </div>
+
+    </div>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <section class="activity-section">
+      <h2>Recent Activity</h2>
+
+      <div
+        class="activity-row"
+        *ngFor="let transaction of recentTransactions()"
+      >
+        <div>
+          <strong>{{ transaction.title }}</strong>
+          <span>{{ transaction.category }}</span>
+        </div>
+
+        <p [class.expense-text]="transaction.type === 'Expense'">
+          {{ transaction.type === 'Income' ? '+' : '-' }} Rs {{ transaction.amount }}
+        </p>
+      </div>
+
+      <p class="empty-state" *ngIf="recentTransactions().length === 0">
+        No transactions yet.
+      </p>
+    </section>
+
+  </div>
+
+</div>

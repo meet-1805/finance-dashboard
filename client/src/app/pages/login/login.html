@@ -1,0 +1,41 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h1>Finance Dashboard</h1>
+
+   <form (ngSubmit)="loginUser()">
+
+  <input
+    type="email"
+    placeholder="Enter Email"
+    [(ngModel)]="email"
+    name="email"
+    required
+  />
+
+  <input
+    type="password"
+    placeholder="Enter Password"
+    [(ngModel)]="password"
+    name="password"
+    required
+  />
+
+  <p class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <button type="submit" [disabled]="isSubmitting">
+    {{ isSubmitting ? 'Logging in...' : 'Login' }}
+  </button>
+
+</form>
+    <p>
+      Don't have an account?
+      <a routerLink="/register">Register</a>
+    </p>
+
+  </div>
+
+</div>

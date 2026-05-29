@@ -1,0 +1,83 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+
+    <h1>All Expenses</h1>
+
+    <div class="expense-form">
+
+      <input
+        type="text"
+        placeholder="Expense Title"
+        [(ngModel)]="title"
+      >
+
+      <input
+        type="number"
+        placeholder="Amount"
+        [(ngModel)]="amount"
+      >
+
+      <input
+        type="text"
+        placeholder="Category"
+        [(ngModel)]="category"
+      >
+
+      <button (click)="saveExpense()">
+        {{ editingId ? 'Update Expense' : 'Add Expense' }}
+      </button>
+
+      <button
+        class="secondary-btn"
+        *ngIf="editingId"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <div
+      class="expense-card"
+      *ngFor="let expense of expenses"
+    >
+
+      <div>
+
+        <h2>{{ expense.title }}</h2>
+
+        <p>{{ expense.category }}</p>
+
+      </div>
+
+      <div class="right-section">
+
+        <h2>Rs {{ expense.amount }}</h2>
+
+        <button
+          class="edit-btn"
+          (click)="startEdit(expense)"
+        >
+          Edit
+        </button>
+
+        <button
+          class="delete-btn"
+          (click)="deleteExpense(expense._id)"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

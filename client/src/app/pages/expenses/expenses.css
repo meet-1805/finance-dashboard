@@ -1,0 +1,90 @@
+/* Expenses Page Specific Styles - Layout is handled globally */
+
+.expense-form {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.expense-form input {
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #374151;
+  color: white;
+}
+
+.expense-form button {
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
+
+.expense-form button:hover {
+  background: #16a34a;
+}
+
+.expense-form .secondary-btn {
+  background: #64748b;
+}
+
+.expense-form .secondary-btn:hover {
+  background: #475569;
+}
+
+.expense-card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.expense-card:hover {
+  transform: translateY(-2px);
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.delete-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.edit-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+}

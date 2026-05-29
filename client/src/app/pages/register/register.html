@@ -1,0 +1,50 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h1>Create Account</h1>
+
+    <form (ngSubmit)="registerUser()">
+
+      <input
+        type="text"
+        placeholder="Full Name"
+        [(ngModel)]="name"
+        name="name"
+        required
+      />
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+
+      <p class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating...' : 'Register' }}
+      </button>
+
+    </form>
+
+    <p>
+      Already have an account?
+      <a routerLink="/">Login</a>
+    </p>
+
+  </div>
+
+</div>
