@@ -3,12 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, of } from 'rxjs';
 import { API_BASE_URL } from './api';
 
-export interface Category {
-  _id?: string;
-  name: string;
-  isDefault?: boolean;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,10 +10,12 @@ export class CategoryService {
   private categorySignal = signal<string[]>([]);
   private categoriesLoaded = false;
 
+  // Public read-only signal representing the categories list state
   public categories = this.categorySignal.asReadonly();
 
   constructor(private http: HttpClient) {}
 
+  // Fetch with cache check, matching the pattern in BudgetService
   loadCategories(force = false): Observable<string[]> {
     if (this.categoriesLoaded && !force) {
       return of(this.categorySignal());
@@ -32,24 +28,13 @@ export class CategoryService {
     );
   }
 
+  // Retrieve categories matching getBudgets() pattern
   getCategories(): Observable<string[]> {
     return this.loadCategories();
   }
 
-  createCategory(name: string): Observable<Category> {
-    return this.http.post<Category>(`${API_BASE_URL}/categories`, { name }).pipe(
-      tap(res => {
-        if (res && res.name) {
-          this.categorySignal.update(list => {
-            const updated = [...list];
-            if (!updated.includes(res.name)) {
-              updated.push(res.name);
-              updated.sort((a, b) => a.localeCompare(b));
-            }
-            return updated;
-          });
-        }
-      })
-    );
+  // Create a new category without inner subscription. The component can chain the refresh
+  createCategory(name: string): Observable<any> {
+    return this.http.post<any>(`${API_BASE_URL}/categories`, { name });
   }
 }
