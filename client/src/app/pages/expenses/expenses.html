@@ -19,11 +19,10 @@
         [(ngModel)]="amount"
       >
 
-      <input
-        type="text"
-        placeholder="Category"
-        [(ngModel)]="category"
-      >
+      <select [(ngModel)]="category" class="category-select">
+        <option value="" disabled selected>Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
 
       <button (click)="saveExpense()">
         {{ editingId ? 'Update Expense' : 'Add Expense' }}

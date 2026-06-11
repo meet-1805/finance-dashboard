@@ -5,11 +5,15 @@ const {
     getBudgets,
     createBudget,
     updateBudget,
-    deleteBudget
+    deleteBudget,
+    getCategories
 } = require('../controllers/budgetController');
 
 // All budget routes must be protected
 router.use(protect);
+
+router.route('/categories')
+    .get(getCategories);
 
 router.route('/')
     .get(getBudgets)
