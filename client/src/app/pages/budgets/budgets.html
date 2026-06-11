@@ -5,12 +5,27 @@
     <h1>Budget Management</h1>
 
     <div class="expense-form">
-      <input
-        type="text"
-        placeholder="Category (e.g. Food)"
-        [(ngModel)]="category"
-        [disabled]="editingId !== ''"
-      >
+      <ng-container *ngIf="!isAddingNewCategory">
+        <select
+          [(ngModel)]="category"
+          (change)="onCategoryChange()"
+          [disabled]="editingId !== ''"
+          class="category-select"
+        >
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          <option value="__ADD_NEW__">+ Add New Category</option>
+        </select>
+      </ng-container>
+
+      <ng-container *ngIf="isAddingNewCategory">
+        <input
+          type="text"
+          placeholder="New Category Name"
+          [(ngModel)]="newCategoryName"
+        >
+        <button class="secondary-btn" (click)="cancelNewCategory()">✕</button>
+      </ng-container>
       <input
         type="number"
         placeholder="Monthly Limit"

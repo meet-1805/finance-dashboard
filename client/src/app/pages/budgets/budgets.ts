@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { Budget, BudgetService } from '../../services/budget';
+import { CategoryService } from '../../services/category';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
 
 @Component({
@@ -19,8 +20,12 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
 export class Budgets implements OnInit {
   private authService = inject(AuthService);
   private budgetService = inject(BudgetService);
+  private categoryService = inject(CategoryService);
 
   category = '';
+  categories: string[] = [];
+  isAddingNewCategory = false;
+  newCategoryName = '';
   monthlyLimit = 0;
   errorMessage = '';
   editingId = '';
@@ -35,18 +40,50 @@ export class Budgets implements OnInit {
         this.errorMessage = err.error?.message || 'Could not load budgets.';
       }
     });
+    this.categoryService.getCategories().subscribe({
+      next: (cats) => { this.categories = cats; },
+      error: (err) => { console.error('Failed to load categories', err); }
+    });
+  }
+
+  onCategoryChange() {
+    if (this.category === '__ADD_NEW__') {
+      this.isAddingNewCategory = true;
+      this.category = '';
+    }
+  }
+
+  cancelNewCategory() {
+    this.isAddingNewCategory = false;
+    this.newCategoryName = '';
+    this.category = '';
   }
 
   saveBudget() {
     this.errorMessage = '';
+    const activeCategory = this.isAddingNewCategory ? this.newCategoryName.trim() : this.category;
 
-    if (!this.category || !this.monthlyLimit) {
+    if (!activeCategory || !this.monthlyLimit) {
       this.errorMessage = 'Category and monthly limit are required.';
       return;
     }
 
+    if (this.isAddingNewCategory) {
+      // Create category first, then create budget
+      this.categoryService.createCategory(activeCategory).subscribe({
+        next: () => this.executeSaveBudget(activeCategory),
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Error creating category.';
+        }
+      });
+    } else {
+      this.executeSaveBudget(activeCategory);
+    }
+  }
+
+  private executeSaveBudget(catName: string) {
     const payload = {
-      category: this.category,
+      category: catName,
       monthlyLimit: Number(this.monthlyLimit)
     };
 
@@ -57,8 +94,12 @@ export class Budgets implements OnInit {
     request.subscribe({
       next: () => {
         this.category = '';
+        this.newCategoryName = '';
+        this.isAddingNewCategory = false;
         this.monthlyLimit = 0;
         this.editingId = '';
+        // Refresh categories so new category appears in dropdowns
+        this.categoryService.loadCategories(true).subscribe(cats => this.categories = cats);
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Error saving budget.';
