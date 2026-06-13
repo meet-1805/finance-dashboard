@@ -44,11 +44,19 @@ const getIncome = async (req, res) => {
 
     try {
 
-        const income = await Income.find({
+        const { month, year } = req.query;
+        let query = { userId: req.user.id };
 
-            userId: req.user.id
+        if (month !== undefined || year !== undefined) {
+            const { getUTCMonthBoundaries } = require('../utils/dateUtils');
+            const boundaries = getUTCMonthBoundaries(month, year);
+            if (!boundaries) {
+                return res.status(400).json({ message: "Invalid month or year parameters" });
+            }
+            query.createdAt = { $gte: boundaries.startOfMonth, $lte: boundaries.endOfMonth };
+        }
 
-        }).sort({ createdAt: -1 });
+        const income = await Income.find(query).sort({ createdAt: -1 });
 
         res.status(200).json(income);
 

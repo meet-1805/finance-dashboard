@@ -40,9 +40,19 @@ const getExpenses = async (req, res) => {
 
   try {
 
-    const expenses = await Expense.find({
-      userId: req.user.id
-    }).sort({ createdAt: -1 });
+    const { month, year } = req.query;
+    let query = { userId: req.user.id };
+
+    if (month !== undefined || year !== undefined) {
+      const { getUTCMonthBoundaries } = require('../utils/dateUtils');
+      const boundaries = getUTCMonthBoundaries(month, year);
+      if (!boundaries) {
+        return res.status(400).json({ message: "Invalid month or year parameters" });
+      }
+      query.createdAt = { $gte: boundaries.startOfMonth, $lte: boundaries.endOfMonth };
+    }
+
+    const expenses = await Expense.find(query).sort({ createdAt: -1 });
 
     res.status(200).json(expenses);
 

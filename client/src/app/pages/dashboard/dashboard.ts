@@ -1,15 +1,18 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { TransactionService } from '../../services/transaction';
+import { DateStateService } from '../../services/date-state';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { MonthSelectorComponent } from '../../components/month-selector/month-selector';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    SidebarComponent
+    SidebarComponent,
+    MonthSelectorComponent
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
@@ -18,6 +21,7 @@ export class Dashboard implements OnInit {
 
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
+  private dateStateService = inject(DateStateService);
 
   userName = 'User';
   errorMessage = '';
@@ -47,16 +51,22 @@ export class Dashboard implements OnInit {
       .slice(0, 5);
   });
 
+  constructor() {
+    effect(() => {
+      const month = this.dateStateService.selectedMonth();
+      const year = this.dateStateService.selectedYear();
+      
+      this.transactionService.loadIncome(true, month, year).subscribe({
+        error: (err) => this.errorMessage = err.error?.message || 'Could not load income.'
+      });
+      this.transactionService.loadExpenses(true, month, year).subscribe({
+        error: (err) => this.errorMessage = err.error?.message || 'Could not load expenses.'
+      });
+    });
+  }
+
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
     if (user) this.userName = user.name;
-
-    // Trigger initial load — service caches after first call
-    this.transactionService.loadIncome().subscribe({
-      error: (err) => this.errorMessage = err.error?.message || 'Could not load income.'
-    });
-    this.transactionService.loadExpenses().subscribe({
-      error: (err) => this.errorMessage = err.error?.message || 'Could not load expenses.'
-    });
   }
 }

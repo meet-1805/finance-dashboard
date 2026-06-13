@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
@@ -7,7 +7,9 @@ import {
   TransactionService
 } from '../../services/transaction';
 import { BudgetService } from '../../services/budget';
+import { DateStateService } from '../../services/date-state';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { MonthSelectorComponent } from '../../components/month-selector/month-selector';
 
 @Component({
   selector: 'app-expenses',
@@ -15,7 +17,8 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
   imports: [
     CommonModule,
     FormsModule,
-    SidebarComponent
+    SidebarComponent,
+    MonthSelectorComponent
   ],
   templateUrl: './expenses.html',
   styleUrl: './expenses.css'
@@ -25,6 +28,7 @@ export class Expenses implements OnInit {
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
   private budgetService = inject(BudgetService);
+  private dateStateService = inject(DateStateService);
 
   title = '';
   amount = 0;
@@ -38,14 +42,20 @@ export class Expenses implements OnInit {
     return this.transactionService.expenses();
   }
 
-  ngOnInit(): void {
-    // Trigger initial load — service caches after first call
-    this.transactionService.loadExpenses().subscribe({
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Could not load expenses.';
-      }
+  constructor() {
+    effect(() => {
+      const month = this.dateStateService.selectedMonth();
+      const year = this.dateStateService.selectedYear();
+      
+      this.transactionService.loadExpenses(true, month, year).subscribe({
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Could not load expenses.';
+        }
+      });
     });
+  }
 
+  ngOnInit(): void {
     // Load dynamic categories
     this.budgetService.getCategories().subscribe({
       next: (cats) => {

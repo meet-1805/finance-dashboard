@@ -1,0 +1,27 @@
+<div class="month-selector-container">
+  <div class="selector-field">
+    <label for="month-select">Month</label>
+    <select
+      id="month-select"
+      [ngModel]="selectedMonth()"
+      (ngModelChange)="onMonthChange($event)"
+    >
+      <option *ngFor="let m of months; let i = index" [value]="i + 1">
+        {{ m }}
+      </option>
+    </select>
+  </div>
+
+  <div class="selector-field">
+    <label for="year-select">Year</label>
+    <select
+      id="year-select"
+      [ngModel]="selectedYear()"
+      (ngModelChange)="onYearChange($event)"
+    >
+      <option *ngFor="let y of years" [value]="y">
+        {{ y }}
+      </option>
+    </select>
+  </div>
+</div>

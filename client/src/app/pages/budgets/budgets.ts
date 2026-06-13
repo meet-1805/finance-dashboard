@@ -1,10 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { Budget, BudgetService } from '../../services/budget';
 import { CategoryService } from '../../services/category';
+import { DateStateService } from '../../services/date-state';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { MonthSelectorComponent } from '../../components/month-selector/month-selector';
 
 @Component({
   selector: 'app-budgets',
@@ -12,7 +14,8 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
   imports: [
     CommonModule,
     FormsModule,
-    SidebarComponent
+    SidebarComponent,
+    MonthSelectorComponent
   ],
   templateUrl: './budgets.html',
   styleUrl: './budgets.css'
@@ -21,6 +24,7 @@ export class Budgets implements OnInit {
   private authService = inject(AuthService);
   private budgetService = inject(BudgetService);
   private categoryService = inject(CategoryService);
+  private dateStateService = inject(DateStateService);
 
   category = '';
   categories: string[] = [];
@@ -34,12 +38,20 @@ export class Budgets implements OnInit {
     return this.budgetService.budgets();
   }
 
-  ngOnInit(): void {
-    this.budgetService.loadBudgets().subscribe({
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Could not load budgets.';
-      }
+  constructor() {
+    effect(() => {
+      const month = this.dateStateService.selectedMonth();
+      const year = this.dateStateService.selectedYear();
+      
+      this.budgetService.loadBudgets(true, month, year).subscribe({
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Could not load budgets.';
+        }
+      });
     });
+  }
+
+  ngOnInit(): void {
     this.categoryService.getCategories().subscribe({
       next: (cats) => { this.categories = cats; },
       error: (err) => { console.error('Failed to load categories', err); }

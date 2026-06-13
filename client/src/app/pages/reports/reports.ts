@@ -6,7 +6,9 @@ import { ChartConfiguration, ChartType } from 'chart.js';
 
 import { TransactionService } from '../../services/transaction';
 import { AuthService } from '../../services/auth';
+import { DateStateService } from '../../services/date-state';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { MonthSelectorComponent } from '../../components/month-selector/month-selector';
 
 @Component({
   selector: 'app-reports',
@@ -14,7 +16,8 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
   imports: [
     CommonModule,
     BaseChartDirective,
-    SidebarComponent
+    SidebarComponent,
+    MonthSelectorComponent
   ],
   templateUrl: './reports.html',
   styleUrl: './reports.css'
@@ -23,6 +26,7 @@ export class Reports implements OnInit {
 
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
+  private dateStateService = inject(DateStateService);
 
   errorMessage = '';
 
@@ -52,8 +56,19 @@ export class Reports implements OnInit {
   };
 
   constructor() {
-    // Reactive effect — auto-updates chart data whenever signals change
+    // Reactive effect — auto-updates chart data and loads monthly boundaries whenever selected date changes
     effect(() => {
+      const month = this.dateStateService.selectedMonth();
+      const year = this.dateStateService.selectedYear();
+
+      // Trigger loads first to fetch data for selected month
+      this.transactionService.loadIncome(true, month, year).subscribe({
+        error: (err) => this.errorMessage = err.error?.message || 'Could not load income report data.'
+      });
+      this.transactionService.loadExpenses(true, month, year).subscribe({
+        error: (err) => this.errorMessage = err.error?.message || 'Could not load expense report data.'
+      });
+
       const incomeTotal = this.totalIncome();
       const expenseTotal = this.totalExpenses();
       const balance = this.currentBalance();
@@ -89,12 +104,6 @@ export class Reports implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionService.loadIncome().subscribe({
-      error: (err) => this.errorMessage = err.error?.message || 'Could not load income report data.'
-    });
-    this.transactionService.loadExpenses().subscribe({
-      error: (err) => this.errorMessage = err.error?.message || 'Could not load expense report data.'
-    });
   }
 
   logout(): void {
