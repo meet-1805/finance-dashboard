@@ -44,15 +44,28 @@ exports.getCategories = async (req, res) => {
 // @access  Private
 exports.getBudgets = async (req, res) => {
     try {
+        const { getUTCMonthBoundaries } = require('../utils/dateUtils');
         const userId = req.user.id;
         const budgets = await Budget.find({ userId });
 
-        // Get current month date range
-        const now = new Date();
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        const { month, year } = req.query;
+        let startOfMonth, endOfMonth;
 
-        // Fetch all expenses for the user in the current month
+        if (month !== undefined || year !== undefined) {
+            const boundaries = getUTCMonthBoundaries(month, year);
+            if (!boundaries) {
+                return res.status(400).json({ message: "Invalid month or year parameters" });
+            }
+            startOfMonth = boundaries.startOfMonth;
+            endOfMonth = boundaries.endOfMonth;
+        } else {
+            // Default current month utilization if no parameters are supplied
+            const now = new Date();
+            startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0));
+            endOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+        }
+
+        // Fetch all expenses for the user in the selected month
         const expenses = await Expense.find({
             userId,
             createdAt: { $gte: startOfMonth, $lte: endOfMonth }
@@ -71,9 +84,9 @@ exports.getBudgets = async (req, res) => {
                 : 0;
 
             let status = 'Normal';
-            if (usagePercentage > 100) {
-                status = 'Exceeded';
-            } else if (usagePercentage > 80) {
+            if (usagePercentage >= 100) {
+                status = 'Over Budget';
+            } else if (usagePercentage >= 80) {
                 status = 'Warning';
             }
 

@@ -30,11 +30,15 @@ export class TransactionService {
   constructor(private http: HttpClient) {}
 
   // Fetch with cache check
-  loadIncome(force = false): Observable<Transaction[]> {
-    if (this.incomeLoaded && !force) {
+  loadIncome(force = false, month?: number, year?: number): Observable<Transaction[]> {
+    if (this.incomeLoaded && !force && month === undefined && year === undefined) {
       return of(this.incomeSignal());
     }
-    return this.http.get<Transaction[]>(`${API_BASE_URL}/income`).pipe(
+    let params = '';
+    if (month !== undefined && year !== undefined) {
+      params = `?month=${month}&year=${year}`;
+    }
+    return this.http.get<Transaction[]>(`${API_BASE_URL}/income${params}`).pipe(
       tap(data => {
         this.incomeSignal.set(data);
         this.incomeLoaded = true;
@@ -78,11 +82,15 @@ export class TransactionService {
   }
 
   // Fetch with cache check
-  loadExpenses(force = false): Observable<Transaction[]> {
-    if (this.expensesLoaded && !force) {
+  loadExpenses(force = false, month?: number, year?: number): Observable<Transaction[]> {
+    if (this.expensesLoaded && !force && month === undefined && year === undefined) {
       return of(this.expenseSignal());
     }
-    return this.http.get<Transaction[]>(`${API_BASE_URL}/expenses`).pipe(
+    let params = '';
+    if (month !== undefined && year !== undefined) {
+      params = `?month=${month}&year=${year}`;
+    }
+    return this.http.get<Transaction[]>(`${API_BASE_URL}/expenses${params}`).pipe(
       tap(data => {
         this.expenseSignal.set(data);
         this.expensesLoaded = true;

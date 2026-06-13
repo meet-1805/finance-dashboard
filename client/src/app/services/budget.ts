@@ -32,11 +32,15 @@ export class BudgetService {
   constructor(private http: HttpClient) {}
 
   // Fetch with cache check
-  loadBudgets(force = false): Observable<Budget[]> {
-    if (this.budgetsLoaded && !force) {
+  loadBudgets(force = false, month?: number, year?: number): Observable<Budget[]> {
+    if (this.budgetsLoaded && !force && month === undefined && year === undefined) {
       return of(this.budgetSignal());
     }
-    return this.http.get<Budget[]>(`${API_BASE_URL}/budgets`).pipe(
+    let params = '';
+    if (month !== undefined && year !== undefined) {
+      params = `?month=${month}&year=${year}`;
+    }
+    return this.http.get<Budget[]>(`${API_BASE_URL}/budgets${params}`).pipe(
       tap(data => {
         this.budgetSignal.set(data);
         this.budgetsLoaded = true;

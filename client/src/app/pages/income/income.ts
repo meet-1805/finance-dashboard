@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
@@ -6,7 +6,9 @@ import {
   Transaction,
   TransactionService
 } from '../../services/transaction';
+import { DateStateService } from '../../services/date-state';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { MonthSelectorComponent } from '../../components/month-selector/month-selector';
 
 @Component({
   selector: 'app-income',
@@ -14,7 +16,8 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
   imports: [
     CommonModule,
     FormsModule,
-    SidebarComponent
+    SidebarComponent,
+    MonthSelectorComponent
   ],
   templateUrl: './income.html',
   styleUrl: './income.css'
@@ -23,6 +26,7 @@ export class Income implements OnInit {
 
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
+  private dateStateService = inject(DateStateService);
 
   title = '';
   amount = 0;
@@ -35,13 +39,20 @@ export class Income implements OnInit {
     return this.transactionService.income();
   }
 
-  ngOnInit(): void {
-    // Trigger initial load — service caches after first call
-    this.transactionService.loadIncome().subscribe({
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Could not load income.';
-      }
+  constructor() {
+    effect(() => {
+      const month = this.dateStateService.selectedMonth();
+      const year = this.dateStateService.selectedYear();
+      
+      this.transactionService.loadIncome(true, month, year).subscribe({
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Could not load income.';
+        }
+      });
     });
+  }
+
+  ngOnInit(): void {
   }
 
   saveIncome() {
