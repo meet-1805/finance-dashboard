@@ -60,8 +60,8 @@
 
       <div class="budget-stats">
         <div>
-          <p>Limit</p>
-          <h3>Rs {{ budget.monthlyLimit }}</h3>
+          <p>{{ effectiveLimitLabel }}</p>
+          <h3>Rs {{ getEffectiveLimit(budget) }}</h3>
         </div>
         <div>
           <p>Spent</p>

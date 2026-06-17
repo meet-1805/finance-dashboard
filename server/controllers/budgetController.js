@@ -56,8 +56,8 @@ exports.getBudgets = async (req, res) => {
             if (!boundaries) {
                 return res.status(400).json({ message: "Invalid month or year parameters" });
             }
-            startOfMonth = boundaries.startOfMonth;
-            endOfMonth = boundaries.endOfMonth;
+            startOfMonth = boundaries.startOfPeriod;
+            endOfMonth = boundaries.endOfPeriod;
         } else {
             // Default current month utilization if no parameters are supplied
             const now = new Date();
@@ -77,10 +77,11 @@ exports.getBudgets = async (req, res) => {
                 exp => exp.category.toLowerCase() === budget.category.toLowerCase()
             );
 
+            const effectiveLimit = month === 'all' ? budget.monthlyLimit * 12 : budget.monthlyLimit;
             const amountSpent = categoryExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-            const remainingBudget = budget.monthlyLimit - amountSpent;
-            const usagePercentage = budget.monthlyLimit > 0 
-                ? (amountSpent / budget.monthlyLimit) * 100 
+            const remainingBudget = effectiveLimit - amountSpent;
+            const usagePercentage = effectiveLimit > 0 
+                ? (amountSpent / effectiveLimit) * 100 
                 : 0;
 
             let status = 'Normal';

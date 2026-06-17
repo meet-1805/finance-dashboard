@@ -30,7 +30,7 @@ export class TransactionService {
   constructor(private http: HttpClient) {}
 
   // Fetch with cache check
-  loadIncome(force = false, month?: number, year?: number): Observable<Transaction[]> {
+  loadIncome(force = false, month?: number | 'all', year?: number): Observable<Transaction[]> {
     if (this.incomeLoaded && !force && month === undefined && year === undefined) {
       return of(this.incomeSignal());
     }
@@ -82,7 +82,7 @@ export class TransactionService {
   }
 
   // Fetch with cache check
-  loadExpenses(force = false, month?: number, year?: number): Observable<Transaction[]> {
+  loadExpenses(force = false, month?: number | 'all', year?: number): Observable<Transaction[]> {
     if (this.expensesLoaded && !force && month === undefined && year === undefined) {
       return of(this.expenseSignal());
     }

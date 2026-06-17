@@ -49,7 +49,7 @@ const getExpenses = async (req, res) => {
       if (!boundaries) {
         return res.status(400).json({ message: "Invalid month or year parameters" });
       }
-      query.createdAt = { $gte: boundaries.startOfMonth, $lte: boundaries.endOfMonth };
+      query.createdAt = { $gte: boundaries.startOfPeriod, $lte: boundaries.endOfPeriod };
     }
 
     const expenses = await Expense.find(query).sort({ createdAt: -1 });

@@ -34,11 +34,11 @@ export class MonthSelectorComponent {
     this.years = Array.from({ length: 7 }, (_, i) => currentYear - 5 + i);
   }
 
-  onMonthChange(month: number) {
-    this.dateStateService.changeDate(Number(month), this.selectedYear());
+  onMonthChange(month: any) {
+    this.dateStateService.changeDate(month === 'all' ? 'all' : Number(month), this.selectedYear());
   }
 
-  onYearChange(year: number) {
+  onYearChange(year: any) {
     this.dateStateService.changeDate(this.selectedMonth(), Number(year));
   }
 }

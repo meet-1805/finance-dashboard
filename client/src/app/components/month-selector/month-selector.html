@@ -6,6 +6,7 @@
       [ngModel]="selectedMonth()"
       (ngModelChange)="onMonthChange($event)"
     >
+      <option value="all">All Months</option>
       <option *ngFor="let m of months; let i = index" [value]="i + 1">
         {{ m }}
       </option>

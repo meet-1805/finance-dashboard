@@ -32,7 +32,7 @@ export class BudgetService {
   constructor(private http: HttpClient) {}
 
   // Fetch with cache check
-  loadBudgets(force = false, month?: number, year?: number): Observable<Budget[]> {
+  loadBudgets(force = false, month?: number | 'all', year?: number): Observable<Budget[]> {
     if (this.budgetsLoaded && !force && month === undefined && year === undefined) {
       return of(this.budgetSignal());
     }
