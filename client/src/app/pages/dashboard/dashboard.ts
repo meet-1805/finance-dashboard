@@ -41,6 +41,17 @@ export class Dashboard implements OnInit {
     this.transactionService.income().length + this.transactionService.expenses().length
   );
 
+  // Hardcoded as placeholder per requirements
+  private readonly baseMonthlySalary = 50000;
+
+  salaryReferenceLabel = computed(() => 
+    this.dateStateService.selectedMonth() === 'all' ? 'Yearly Salary Reference' : 'Monthly Salary Reference'
+  );
+
+  salaryReferenceValue = computed(() => 
+    this.dateStateService.selectedMonth() === 'all' ? this.baseMonthlySalary * 12 : this.baseMonthlySalary
+  );
+
   recentTransactions = computed(() => {
     const income = this.transactionService.income().map(i => ({ ...i, type: 'Income' as const }));
     const expenses = this.transactionService.expenses().map(e => ({ ...e, type: 'Expense' as const }));

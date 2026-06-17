@@ -38,6 +38,14 @@ export class Budgets implements OnInit {
     return this.budgetService.budgets();
   }
 
+  get effectiveLimitLabel() {
+    return this.dateStateService.selectedMonth() === 'all' ? 'Yearly Limit' : 'Monthly Limit';
+  }
+
+  getEffectiveLimit(budget: Budget): number {
+    return this.dateStateService.selectedMonth() === 'all' ? budget.monthlyLimit * 12 : budget.monthlyLimit;
+  }
+
   constructor() {
     effect(() => {
       const month = this.dateStateService.selectedMonth();
