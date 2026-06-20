@@ -8,6 +8,8 @@ export interface AuthUser {
   _id: string;
   name: string;
   email: string;
+  monthlySalary: number;
+  onboardingState: 'PENDING' | 'COMPLETED';
 }
 
 export interface AuthResponse {
@@ -80,6 +82,28 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return Boolean(this.getToken());
+  }
+
+  fetchProfile(): Observable<AuthUser> {
+    return this.http.get<AuthUser>(`${API_BASE_URL}/users/profile`).pipe(
+      tap((user) => {
+        localStorage.setItem(this.userKey, JSON.stringify(user));
+      })
+    );
+  }
+
+  completeOnboarding(payload: {
+    monthlySalary: number;
+    budgets?: { category: string; monthlyLimit: number }[];
+  }): Observable<{ message: string; user: AuthUser }> {
+    return this.http.post<{ message: string; user: AuthUser }>(
+      `${API_BASE_URL}/users/onboarding`,
+      payload
+    ).pipe(
+      tap((response) => {
+        localStorage.setItem(this.userKey, JSON.stringify(response.user));
+      })
+    );
   }
 
   private saveSession(response: AuthResponse): void {

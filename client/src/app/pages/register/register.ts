@@ -48,7 +48,7 @@ export class Register {
       password: this.password
     }).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/onboarding']);
       },
       error: (error) => {
         this.errorMessage =

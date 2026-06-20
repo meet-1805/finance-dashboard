@@ -2,27 +2,20 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth';
 
-export const authGuard: CanActivateFn = (
-
-  route,
-  state
-
-) => {
-
+export const onboardingGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
   if (authService.isLoggedIn()) {
     const user = authService.getCurrentUser();
-    if (user?.onboardingState === 'COMPLETED') {
+    if (user?.onboardingState === 'PENDING') {
       return true;
     } else {
-      router.navigate(['/onboarding']);
+      router.navigate(['/dashboard']);
       return false;
     }
   }
 
   router.navigate(['/']);
   return false;
-
 };

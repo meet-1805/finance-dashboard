@@ -38,8 +38,12 @@ export class Login {
       email: this.email,
       password: this.password
     }).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
+      next: (response) => {
+        if (response.user.onboardingState === 'COMPLETED') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/onboarding']);
+        }
       },
       error: (error) => {
         this.errorMessage =
