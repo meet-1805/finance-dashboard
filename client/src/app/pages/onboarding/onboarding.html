@@ -1,0 +1,96 @@
+<div class="onboarding-container">
+  <div class="onboarding-card">
+    <h1>Welcome to Finance Dashboard</h1>
+    <p class="subtitle">Let's set up your profile to get started.</p>
+
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Salary Setup Section -->
+    <div class="section">
+      <label for="monthlySalary">Monthly Salary (Rs)</label>
+      <input 
+        id="monthlySalary" 
+        type="number" 
+        [(ngModel)]="monthlySalary" 
+        placeholder="e.g. 50000" 
+        min="0"
+        required
+      />
+    </div>
+
+    <!-- Budget Setup Section -->
+    <div class="section">
+      <h3>Budget Setup (Optional)</h3>
+      <p class="section-desc">You can pre-define monthly limits for your expense categories below.</p>
+
+      <!-- Current budgets list -->
+      <div *ngIf="budgets.length > 0" class="budget-list">
+        <div *ngFor="let b of budgets; let i = index" class="budget-item">
+          <span>{{ b.category }}: <strong>Rs {{ b.monthlyLimit }}</strong></span>
+          <button type="button" class="btn-remove" (click)="removeBudget(i)">Remove</button>
+        </div>
+      </div>
+
+      <!-- Add Budget Form -->
+      <div class="add-budget-form">
+        <div class="form-group" *ngIf="!isAddingNewCategory">
+          <label for="categorySelect">Category</label>
+          <select id="categorySelect" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+            <option value="">-- Select Category --</option>
+            <option *ngFor="let cat of availableCategories" [value]="cat">{{ cat }}</option>
+            <option value="__ADD_NEW__">+ Add Custom Category</option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="isAddingNewCategory">
+          <label for="customCategory">Custom Category Name</label>
+          <div class="custom-category-input">
+            <input 
+              id="customCategory" 
+              type="text" 
+              [(ngModel)]="customCategoryName" 
+              placeholder="e.g. Shopping" 
+            />
+            <button type="button" class="btn-secondary" (click)="cancelNewCategory()">Cancel</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="monthlyLimit">Monthly Limit (Rs)</label>
+          <input 
+            id="monthlyLimit" 
+            type="number" 
+            [(ngModel)]="monthlyLimit" 
+            placeholder="Limit amount" 
+            min="1"
+          />
+        </div>
+
+        <button type="button" class="btn-secondary" (click)="addBudget()">+ Add Budget to List</button>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button 
+        type="button" 
+        class="btn-skip" 
+        [disabled]="isSubmitting" 
+        (click)="submitSetup(true)"
+      >
+        Skip Budgets
+      </button>
+      <button 
+        type="button" 
+        class="btn-primary" 
+        [disabled]="isSubmitting" 
+        (click)="submitSetup(false)"
+      >
+        Complete Setup
+      </button>
+    </div>
+  </div>
+</div>

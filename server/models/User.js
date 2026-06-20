@@ -17,6 +17,16 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    monthlySalary: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    onboardingState: {
+        type: String,
+        enum: ['PENDING', 'COMPLETED'],
+        default: 'PENDING'
     }
 }, {
     timestamps: true

@@ -1,4 +1,5 @@
 import { authGuard } from './guards/auth.guard';
+import { onboardingGuard } from './guards/onboarding.guard';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -13,6 +14,13 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () =>
       import('./pages/register/register').then((m) => m.Register)
+  },
+
+  {
+    path: 'onboarding',
+    loadComponent: () =>
+      import('./pages/onboarding/onboarding').then((m) => m.Onboarding),
+    canActivate: [onboardingGuard]
   },
 
   {
