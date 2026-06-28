@@ -86,7 +86,17 @@ const importSessionSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId
         },
         fingerprint: String,
-        userResolvedCategory: String
+        userResolvedCategory: String,
+        approved: {
+            type: Boolean,
+            default: true
+        },
+        finalCategory: String,
+        reviewedAt: Date,
+        reviewedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     }]
 });
 

@@ -226,3 +226,77 @@ exports.learnMerchants = async (req, res) => {
         });
     }
 };
+
+// Phase 6 Review Session Handler
+exports.reviewSession = async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { transactions } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+            return res.status(400).json({ message: "Invalid session ID format." });
+        }
+
+        const session = await ImportSession.findOne({
+            _id: sessionId,
+            userId: req.user.id
+        });
+
+        if (!session) {
+            return res.status(404).json({ message: "Import session not found or expired." });
+        }
+
+        if (!transactions || !Array.isArray(transactions)) {
+            return res.status(400).json({ message: "Transactions review array is required." });
+        }
+
+        // Validate duplicates in incoming sessionTransactionIds to reject duplicate records in request body
+        const seenIds = new Set();
+
+        for (const review of transactions) {
+            const { sessionTransactionId, approved, finalCategory } = review;
+
+            if (!mongoose.Types.ObjectId.isValid(sessionTransactionId)) {
+                return res.status(400).json({ message: `Invalid transaction ID format: ${sessionTransactionId}` });
+            }
+
+            if (seenIds.has(sessionTransactionId)) {
+                return res.status(400).json({ message: `Duplicate transaction ID in review request: ${sessionTransactionId}` });
+            }
+            seenIds.add(sessionTransactionId);
+
+            // Find matching transaction in session subdocument
+            const sessionTx = session.transactions.id(sessionTransactionId);
+            if (!sessionTx) {
+                return res.status(400).json({ message: `Transaction not found in session: ${sessionTransactionId}` });
+            }
+
+            const isApproved = approved !== false; // defaults to true if not explicitly false
+
+            if (isApproved && (!finalCategory || typeof finalCategory !== 'string' || finalCategory.trim() === '')) {
+                return res.status(400).json({ message: `A valid category is required for approved transaction: ${sessionTransactionId}` });
+            }
+
+            // Store decision inside ImportSession
+            sessionTx.approved = isApproved;
+            sessionTx.finalCategory = isApproved ? finalCategory.trim() : null;
+            sessionTx.reviewedAt = new Date();
+            sessionTx.reviewedBy = req.user.id;
+        }
+
+        // Save session changes
+        await session.save();
+
+        res.status(200).json({
+            sessionId: session._id,
+            transactionCount: session.transactions.length,
+            transactions: session.transactions
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to save session review choices.",
+            error: error.message
+        });
+    }
+};
