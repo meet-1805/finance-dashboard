@@ -6,7 +6,12 @@ const merchantMappingSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    rawMerchantText: {
+    normalizedMerchant: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    originalMerchant: {
         type: String,
         required: true,
         trim: true
@@ -35,9 +40,11 @@ const merchantMappingSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    timestamps: true
 });
 
-// Ensure compound uniqueness for userId + rawMerchantText
-merchantMappingSchema.index({ userId: 1, rawMerchantText: 1 }, { unique: true });
+// Ensure compound uniqueness for userId + normalizedMerchant
+merchantMappingSchema.index({ userId: 1, normalizedMerchant: 1 }, { unique: true });
 
 module.exports = mongoose.model('MerchantMapping', merchantMappingSchema);

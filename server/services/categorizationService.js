@@ -1,14 +1,15 @@
 const MerchantMapping = require('../models/MerchantMapping');
 const Expense = require('../models/Expense');
 const Income = require('../models/Income');
+const { normalizeMerchantName } = require('../utils/merchantNormalizer');
 
 // 1. MerchantRuleEngine
 class MerchantRuleEngine {
     static async match(description, userId, type) {
-        const cleanedText = description.trim().toLowerCase();
+        const normalized = normalizeMerchantName(description);
         const mapping = await MerchantMapping.findOne({
             userId,
-            rawMerchantText: cleanedText,
+            normalizedMerchant: normalized,
             type
         });
         if (mapping) {

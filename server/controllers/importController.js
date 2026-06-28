@@ -5,6 +5,7 @@ const ParserFactory = require('../utils/ParserFactory');
 const ImportSession = require('../models/ImportSession');
 const duplicateService = require('../services/duplicateService');
 const categorizationService = require('../services/categorizationService');
+const merchantLearningService = require('../services/merchantLearningService');
 
 // Configure multer to store files in memory
 const storage = multer.memoryStorage();
@@ -184,6 +185,43 @@ exports.categorizeSession = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Failed to perform automatic categorization.",
+            error: error.message
+        });
+    }
+};
+
+// Phase 5 Learn Merchants Handler
+exports.learnMerchants = async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const { transactions } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+            return res.status(400).json({ message: "Invalid session ID format." });
+        }
+
+        const session = await ImportSession.findOne({
+            _id: sessionId,
+            userId: req.user.id
+        });
+
+        if (!session) {
+            return res.status(404).json({ message: "Import session not found or expired." });
+        }
+
+        if (!transactions || !Array.isArray(transactions)) {
+            return res.status(400).json({ message: "Reviewed transactions array is required." });
+        }
+
+        // Process merchant learning rules
+        await merchantLearningService.learnFromReviewedTransactions(session, transactions, req.user.id);
+
+        res.status(200).json({
+            message: "Merchant learning completed successfully for confirmed transactions."
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to run merchant learning engine.",
             error: error.message
         });
     }

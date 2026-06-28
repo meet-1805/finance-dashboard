@@ -14,6 +14,7 @@ router.post(
 router.get('/session/:sessionId', authMiddleware, importController.getSessionPreview);
 router.post('/session/:sessionId/check-duplicates', authMiddleware, importController.checkDuplicates);
 router.post('/session/:sessionId/categorize', authMiddleware, importController.categorizeSession);
+router.post('/session/:sessionId/learn', authMiddleware, importController.learnMerchants);
 router.post('/confirm', authMiddleware, importController.confirmImport);
 router.get('/history', authMiddleware, importController.getHistory);
 router.post('/history/:id/rollback', authMiddleware, importController.rollbackImport);
