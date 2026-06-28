@@ -13,8 +13,25 @@ const importSessionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['PROCESSING', 'REVIEWING', 'COMPLETED'],
-        default: 'PROCESSING'
+        enum: ['READY_FOR_REVIEW', 'IMPORTING', 'COMPLETED', 'FAILED'],
+        default: 'READY_FOR_REVIEW'
+    },
+    uploadedAt: {
+        type: Date,
+        default: Date.now
+    },
+    fileType: {
+        type: String,
+        enum: ['CSV', 'EXCEL', 'PDF'],
+        required: true
+    },
+    parserVersion: {
+        type: String,
+        default: '1.0.0'
+    },
+    totalCount: {
+        type: Number,
+        required: true
     },
     transactions: [{
         date: {

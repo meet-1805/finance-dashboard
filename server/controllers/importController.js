@@ -1,6 +1,8 @@
 const path = require('path');
 const multer = require('multer');
+const mongoose = require('mongoose');
 const ParserFactory = require('../utils/ParserFactory');
+const ImportSession = require('../models/ImportSession');
 
 // Configure multer to store files in memory
 const storage = multer.memoryStorage();
@@ -20,18 +22,18 @@ const upload = multer({
 
 // Empty handlers skeleton for future phases
 exports.confirmImport = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in Phase 1" });
+    res.status(501).json({ message: "Not implemented in this phase" });
 };
 
 exports.getHistory = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in Phase 1" });
+    res.status(501).json({ message: "Not implemented in this phase" });
 };
 
 exports.rollbackImport = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in Phase 1" });
+    res.status(501).json({ message: "Not implemented in this phase" });
 };
 
-// Phase 1 Upload Handler
+// Phase 1 & 2 Upload Handler
 exports.uploadMiddleware = upload.single('statement');
 
 exports.uploadStatement = async (req, res) => {
@@ -44,16 +46,60 @@ exports.uploadStatement = async (req, res) => {
         const parser = ParserFactory.getParser(ext);
         const transactions = await parser.parse(req.file.buffer);
 
-        res.status(200).json({
-            message: "File uploaded and parsed successfully.",
-            fileType: "CSV",
-            transactionCount: transactions.length,
+        if (transactions.length === 0) {
+            return res.status(400).json({ message: "No valid transactions found in statement. Empty sessions cannot be created." });
+        }
+
+        // Create the Import Session in the database
+        const session = await ImportSession.create({
+            userId: req.user.id,
+            status: 'READY_FOR_REVIEW',
+            fileType: 'CSV',
+            parserVersion: '1.0.0',
+            totalCount: transactions.length,
             transactions: transactions
+        });
+
+        res.status(200).json({
+            sessionId: session._id,
+            transactionCount: session.transactions.length,
+            transactions: session.transactions
         });
 
     } catch (error) {
         res.status(400).json({
             message: "Failed to parse statement.",
+            error: error.message
+        });
+    }
+};
+
+// Phase 2 Get Session Preview Handler
+exports.getSessionPreview = async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+            return res.status(400).json({ message: "Invalid session ID format." });
+        }
+
+        const session = await ImportSession.findOne({
+            _id: sessionId,
+            userId: req.user.id
+        });
+
+        if (!session) {
+            return res.status(404).json({ message: "Import session not found or expired." });
+        }
+
+        res.status(200).json({
+            sessionId: session._id,
+            transactionCount: session.transactions.length,
+            transactions: session.transactions
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to retrieve import session.",
             error: error.message
         });
     }

@@ -11,6 +11,7 @@ router.post(
     importController.uploadStatement
 );
 
+router.get('/session/:sessionId', authMiddleware, importController.getSessionPreview);
 router.post('/confirm', authMiddleware, importController.confirmImport);
 router.get('/history', authMiddleware, importController.getHistory);
 router.post('/history/:id/rollback', authMiddleware, importController.rollbackImport);
