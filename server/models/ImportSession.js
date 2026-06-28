@@ -53,6 +53,17 @@ const importSessionSchema = new mongoose.Schema({
         },
         suggestedCategory: String,
         confidenceScore: Number,
+        confidence: Number,
+        categoryStatus: {
+            type: String,
+            enum: ['AUTO', 'REVIEW', 'UNKNOWN'],
+            default: 'UNKNOWN'
+        },
+        categorizationSource: {
+            type: String,
+            enum: ['MERCHANT_MAPPING', 'USER_HISTORY', 'KEYWORD', 'UNKNOWN'],
+            default: 'UNKNOWN'
+        },
         duplicateStatus: {
             type: String,
             enum: ['NONE', 'EXACT', 'POTENTIAL'],
