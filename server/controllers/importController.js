@@ -6,6 +6,9 @@ const ImportSession = require('../models/ImportSession');
 const duplicateService = require('../services/duplicateService');
 const categorizationService = require('../services/categorizationService');
 const merchantLearningService = require('../services/merchantLearningService');
+const Income = require('../models/Income');
+const Expense = require('../models/Expense');
+const ImportHistory = require('../models/ImportHistory');
 
 // Configure multer to store files in memory
 const storage = multer.memoryStorage();
@@ -24,8 +27,120 @@ const upload = multer({
 });
 
 // Empty handlers skeleton for future phases
+// Phase 7 Permanent Import Execution
 exports.confirmImport = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in this phase" });
+    const { sessionId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+        return res.status(400).json({ message: "Invalid session ID format." });
+    }
+
+    const dbSession = await mongoose.startSession();
+    dbSession.startTransaction();
+
+    try {
+        // Find import session within transaction
+        const importSession = await ImportSession.findOne({
+            _id: sessionId,
+            userId: req.user.id
+        }).session(dbSession);
+
+        if (!importSession) {
+            await dbSession.abortTransaction();
+            dbSession.endSession();
+            return res.status(404).json({ message: "Import session not found or expired." });
+        }
+
+        // Update session status to prevent duplicate triggers
+        importSession.status = 'IMPORTING';
+        await importSession.save({ session: dbSession });
+
+        const importedIncomeIds = [];
+        const importedExpenseIds = [];
+        let duplicateCount = 0;
+        let skippedCount = 0;
+
+        for (const tx of importSession.transactions) {
+            // Import rules: approved is true, duplicate is false, finalCategory is present
+            const isApproved = tx.approved === true;
+            const isNotDuplicate = tx.duplicate === false;
+            const hasCategory = tx.finalCategory !== null && tx.finalCategory !== undefined && tx.finalCategory !== '';
+
+            if (isApproved && isNotDuplicate && hasCategory) {
+                if (tx.type === 'Income') {
+                    const newIncome = new Income({
+                        title: tx.description,
+                        amount: tx.amount,
+                        category: tx.finalCategory,
+                        userId: req.user.id,
+                        createdAt: tx.date // Align with transaction date
+                    });
+                    await newIncome.save({ session: dbSession });
+                    importedIncomeIds.push(newIncome._id);
+                } else if (tx.type === 'Expense') {
+                    const newExpense = new Expense({
+                        title: tx.description,
+                        amount: tx.amount,
+                        category: tx.finalCategory,
+                        userId: req.user.id,
+                        createdAt: tx.date // Align with transaction date
+                    });
+                    await newExpense.save({ session: dbSession });
+                    importedExpenseIds.push(newExpense._id);
+                }
+            } else {
+                if (tx.duplicate === true) {
+                    duplicateCount++;
+                } else {
+                    skippedCount++;
+                }
+            }
+        }
+
+        // Create ImportHistory record within transaction
+        const history = await ImportHistory.create([{
+            userId: req.user.id,
+            sessionId: importSession._id,
+            importedCount: importedIncomeIds.length + importedExpenseIds.length,
+            skippedCount: skippedCount,
+            duplicateCount: duplicateCount,
+            fileType: importSession.fileType,
+            parserVersion: importSession.parserVersion,
+            startedAt: importSession.uploadedAt,
+            completedAt: new Date(),
+            status: 'COMPLETED',
+            importedIncomeIds,
+            importedExpenseIds
+        }], { session: dbSession });
+
+        // Delete the temporary ImportSession
+        await ImportSession.deleteOne({ _id: sessionId, userId: req.user.id }).session(dbSession);
+
+        // Commit transaction atomic block
+        await dbSession.commitTransaction();
+        dbSession.endSession();
+
+        res.status(200).json({
+            message: "Import executed successfully.",
+            summary: {
+                totalTransactions: importSession.transactions.length,
+                importedCount: importedIncomeIds.length + importedExpenseIds.length,
+                skippedCount,
+                duplicateCount,
+                incomeCount: importedIncomeIds.length,
+                expenseCount: importedExpenseIds.length
+            },
+            historyId: history[0]._id
+        });
+
+    } catch (error) {
+        await dbSession.abortTransaction();
+        dbSession.endSession();
+        res.status(500).json({
+            message: "Failed to commit transactions to the database. Rollback executed.",
+            error: error.message
+        });
+    }
 };
 
 exports.getHistory = async (req, res) => {

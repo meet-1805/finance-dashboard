@@ -6,17 +6,43 @@ const importHistorySchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    sessionId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    importedCount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    skippedCount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    duplicateCount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     fileType: {
         type: String,
         enum: ['CSV', 'EXCEL', 'PDF'],
         required: true
     },
-    anonymizedName: {
+    parserVersion: {
         type: String,
-        required: true
+        required: true,
+        default: '1.0.0'
     },
-    importDate: {
+    startedAt: {
         type: Date,
+        required: true,
+        default: Date.now
+    },
+    completedAt: {
+        type: Date,
+        required: true,
         default: Date.now
     },
     status: {
@@ -24,17 +50,17 @@ const importHistorySchema = new mongoose.Schema({
         enum: ['COMPLETED', 'ROLLED_BACK'],
         default: 'COMPLETED'
     },
-    summary: {
-        totalTransactions: Number,
-        importedCount: Number,
-        duplicateCount: Number,
-        incomeCount: Number,
-        expenseCount: Number,
-        manualReviewCount: Number
-    }
+    importedIncomeIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Income'
+    }],
+    importedExpenseIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Expense'
+    }]
 });
 
 // Index for fast lookup by user and sorted by date
-importHistorySchema.index({ userId: 1, importDate: -1 });
+importHistorySchema.index({ userId: 1, completedAt: -1 });
 
 module.exports = mongoose.model('ImportHistory', importHistorySchema);
