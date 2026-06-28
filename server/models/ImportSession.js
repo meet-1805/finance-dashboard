@@ -58,6 +58,23 @@ const importSessionSchema = new mongoose.Schema({
             enum: ['NONE', 'EXACT', 'POTENTIAL'],
             default: 'NONE'
         },
+        duplicateType: {
+            type: String,
+            enum: ['NONE', 'EXACT', 'POTENTIAL'],
+            default: 'NONE'
+        },
+        duplicate: {
+            type: Boolean,
+            default: false
+        },
+        matchedCollection: {
+            type: String,
+            enum: ['Income', 'Expense']
+        },
+        matchedRecordId: {
+            type: mongoose.Schema.Types.ObjectId
+        },
+        fingerprint: String,
         userResolvedCategory: String
     }]
 });

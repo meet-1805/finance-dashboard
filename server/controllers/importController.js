@@ -3,6 +3,7 @@ const multer = require('multer');
 const mongoose = require('mongoose');
 const ParserFactory = require('../utils/ParserFactory');
 const ImportSession = require('../models/ImportSession');
+const duplicateService = require('../services/duplicateService');
 
 // Configure multer to store files in memory
 const storage = multer.memoryStorage();
@@ -100,6 +101,47 @@ exports.getSessionPreview = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Failed to retrieve import session.",
+            error: error.message
+        });
+    }
+};
+
+// Phase 3 Check Duplicates Handler
+exports.checkDuplicates = async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(sessionId)) {
+            return res.status(400).json({ message: "Invalid session ID format." });
+        }
+
+        const session = await ImportSession.findOne({
+            _id: sessionId,
+            userId: req.user.id
+        });
+
+        if (!session) {
+            return res.status(404).json({ message: "Import session not found or expired." });
+        }
+
+        if (session.transactions.length === 0) {
+            return res.status(400).json({ message: "Session contains no transactions." });
+        }
+
+        // Perform duplicate detection
+        await duplicateService.checkDuplicates(session, req.user.id);
+
+        // Save the updated session transactions to the database
+        await session.save();
+
+        res.status(200).json({
+            sessionId: session._id,
+            transactionCount: session.transactions.length,
+            transactions: session.transactions
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to perform duplicate detection.",
             error: error.message
         });
     }
