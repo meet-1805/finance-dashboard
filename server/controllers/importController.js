@@ -144,11 +144,109 @@ exports.confirmImport = async (req, res) => {
 };
 
 exports.getHistory = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in this phase" });
+    try {
+        const history = await ImportHistory.find({ userId: req.user.id }).sort({ completedAt: -1 });
+        res.status(200).json(history);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to retrieve import history.",
+            error: error.message
+        });
+    }
+};
+
+exports.getHistoryDetail = async (req, res) => {
+    try {
+        const { historyId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(historyId)) {
+            return res.status(400).json({ message: "Invalid history ID format." });
+        }
+
+        const record = await ImportHistory.findOne({
+            _id: historyId,
+            userId: req.user.id
+        });
+
+        if (!record) {
+            return res.status(404).json({ message: "Import history record not found." });
+        }
+
+        res.status(200).json(record);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to retrieve import history details.",
+            error: error.message
+        });
+    }
 };
 
 exports.rollbackImport = async (req, res) => {
-    res.status(501).json({ message: "Not implemented in this phase" });
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid history ID format." });
+    }
+
+    const dbSession = await mongoose.startSession();
+    dbSession.startTransaction();
+
+    try {
+        const history = await ImportHistory.findOne({
+            _id: id,
+            userId: req.user.id
+        }).session(dbSession);
+
+        if (!history) {
+            await dbSession.abortTransaction();
+            dbSession.endSession();
+            return res.status(404).json({ message: "Import history record not found." });
+        }
+
+        if (history.status === 'ROLLED_BACK') {
+            await dbSession.abortTransaction();
+            dbSession.endSession();
+            return res.status(400).json({ message: "This import has already been rolled back." });
+        }
+
+        // Delete all imported Income records associated with this import session
+        if (history.importedIncomeIds && history.importedIncomeIds.length > 0) {
+            await Income.deleteMany(
+                { _id: { $in: history.importedIncomeIds }, userId: req.user.id },
+                { session: dbSession }
+            );
+        }
+
+        // Delete all imported Expense records associated with this import session
+        if (history.importedExpenseIds && history.importedExpenseIds.length > 0) {
+            await Expense.deleteMany(
+                { _id: { $in: history.importedExpenseIds }, userId: req.user.id },
+                { session: dbSession }
+            );
+        }
+
+        // Mark history as ROLLED_BACK and record metadata
+        history.status = 'ROLLED_BACK';
+        history.rolledBackAt = new Date();
+        history.rolledBackBy = req.user.id;
+        await history.save({ session: dbSession });
+
+        await dbSession.commitTransaction();
+        dbSession.endSession();
+
+        res.status(200).json({
+            message: "Import rolled back successfully. Associated transactions deleted.",
+            history
+        });
+
+    } catch (error) {
+        await dbSession.abortTransaction();
+        dbSession.endSession();
+        res.status(500).json({
+            message: "Rollback failed. Database remains unchanged.",
+            error: error.message
+        });
+    }
 };
 
 // Phase 1 & 2 Upload Handler

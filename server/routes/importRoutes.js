@@ -18,6 +18,7 @@ router.post('/session/:sessionId/learn', authMiddleware, importController.learnM
 router.post('/session/:sessionId/review', authMiddleware, importController.reviewSession);
 router.post('/confirm', authMiddleware, importController.confirmImport);
 router.get('/history', authMiddleware, importController.getHistory);
+router.get('/history/:historyId', authMiddleware, importController.getHistoryDetail);
 router.post('/history/:id/rollback', authMiddleware, importController.rollbackImport);
 
 module.exports = router;

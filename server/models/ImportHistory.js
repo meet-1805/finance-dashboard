@@ -57,7 +57,12 @@ const importHistorySchema = new mongoose.Schema({
     importedExpenseIds: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Expense'
-    }]
+    }],
+    rolledBackAt: Date,
+    rolledBackBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 // Index for fast lookup by user and sorted by date
