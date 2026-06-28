@@ -59,6 +59,34 @@ export const routes: Routes = [
   },
 
   {
+    path: 'import',
+    loadComponent: () =>
+      import('./pages/import/import').then((m) => m.ImportComponent),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'import/review/:sessionId',
+    loadComponent: () =>
+      import('./pages/import-review/import-review').then((m) => m.ImportReviewComponent),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'import/confirm/:sessionId',
+    loadComponent: () =>
+      import('./pages/import-confirm/import-confirm').then((m) => m.ImportConfirmComponent),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'import/history',
+    loadComponent: () =>
+      import('./pages/import-history/import-history').then((m) => m.ImportHistoryComponent),
+    canActivate: [authGuard]
+  },
+
+  {
     path: '**',
     redirectTo: ''
   }

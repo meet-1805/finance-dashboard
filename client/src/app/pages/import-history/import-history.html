@@ -1,0 +1,162 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    <div class="topbar">
+      <h1>Import Statements History</h1>
+    </div>
+
+    <!-- Notifications banner -->
+    <div class="notification success-toast" *ngIf="successMessage">
+      <span>✓ {{ successMessage }}</span>
+    </div>
+    <div class="notification error-toast" *ngIf="errorMessage">
+      <span>⚠️ {{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading View -->
+    <div class="loading-container" *ngIf="isLoading && !errorMessage">
+      <div class="spinner"></div>
+      <p>Retrieving statement import logs...</p>
+    </div>
+
+    <!-- History Logs Table -->
+    <div class="preview-section" *ngIf="!isLoading">
+      <h2>History Log</h2>
+      <div class="table-container">
+        <table class="transaction-table">
+          <thead>
+            <tr>
+              <th>Import Date</th>
+              <th>File Type</th>
+              <th>Imported</th>
+              <th>Skipped</th>
+              <th>Duplicates</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of history" [class.rolled-back-row]="record.status === 'ROLLED_BACK'">
+              <td>{{ record.completedAt | date:'yyyy-MM-dd HH:mm' }}</td>
+              <td>
+                <span class="badge badge-file">{{ record.fileType }}</span>
+              </td>
+              <td><strong>{{ record.importedCount }}</strong></td>
+              <td>{{ record.skippedCount }}</td>
+              <td>{{ record.duplicateCount }}</td>
+              <td>
+                <span class="badge" [class.badge-completed]="record.status === 'COMPLETED'" [class.badge-rolledback]="record.status === 'ROLLED_BACK'">
+                  {{ record.status === 'COMPLETED' ? 'Completed' : 'Rolled Back' }}
+                </span>
+              </td>
+              <td class="action-buttons-cell">
+                <button class="btn-action btn-details" (click)="openDetails(record)">Details</button>
+                <button 
+                  class="btn-action btn-rollback" 
+                  [disabled]="record.status === 'ROLLED_BACK'" 
+                  (click)="confirmRollback(record)"
+                >
+                  {{ record.status === 'ROLLED_BACK' ? 'Rolled Back' : 'Rollback' }}
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="history.length === 0">
+              <td colspan="7" class="empty-state">No import records found in history.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DETAILS MODAL OVERLAY -->
+    <div class="modal-overlay" *ngIf="selectedRecord">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Import Run Details</h3>
+          <button class="btn-close-modal" (click)="closeDetails()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="detail-row">
+            <span>Import History ID:</span>
+            <span class="mono-text">{{ selectedRecord._id }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Session ID:</span>
+            <span class="mono-text">{{ selectedRecord.sessionId }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Started At:</span>
+            <span>{{ selectedRecord.startedAt | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Completed At:</span>
+            <span>{{ selectedRecord.completedAt | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Parser Version:</span>
+            <span>v{{ selectedRecord.parserVersion }}</span>
+          </div>
+          <div class="detail-row">
+            <span>File Type:</span>
+            <span>{{ selectedRecord.fileType }}</span>
+          </div>
+          
+          <hr />
+
+          <div class="detail-row">
+            <span>Imported Records:</span>
+            <strong class="text-green">{{ selectedRecord.importedCount }}</strong>
+          </div>
+          <div class="detail-row">
+            <span>Skipped Records:</span>
+            <strong class="text-orange">{{ selectedRecord.skippedCount }}</strong>
+          </div>
+          <div class="detail-row">
+            <span>Duplicate Records:</span>
+            <strong>{{ selectedRecord.duplicateCount }}</strong>
+          </div>
+          <div class="detail-row">
+            <span>Status:</span>
+            <span class="badge" [class.badge-completed]="selectedRecord.status === 'COMPLETED'" [class.badge-rolledback]="selectedRecord.status === 'ROLLED_BACK'">
+              {{ selectedRecord.status }}
+            </span>
+          </div>
+
+          <div class="detail-row" *ngIf="selectedRecord.rolledBackAt">
+            <span>Rolled Back At:</span>
+            <span>{{ selectedRecord.rolledBackAt | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" (click)="closeDetails()">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLLBACK CONFIRMATION MODAL OVERLAY -->
+    <div class="modal-overlay" *ngIf="recordToRollback">
+      <div class="modal-card modal-warning">
+        <div class="modal-header">
+          <h3>⚠️ Confirm Run Rollback</h3>
+          <button class="btn-close-modal" (click)="closeRollbackModal()">✕</button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Are you sure you want to rollback import run <strong>{{ recordToRollback._id }}</strong>?</p>
+          <div class="warning-alert-box">
+            <p><strong>This action cannot be undone.</strong></p>
+            <p>Rolling back will permanently remove all {{ recordToRollback.importedCount }} transaction records (Income & Expenses) created by this statement from your live dashboard ledger.</p>
+          </div>
+        </div>
+        <div class="modal-footer flex-end">
+          <button class="btn-cancel-modal" [disabled]="isRollingBack" (click)="closeRollbackModal()">Cancel</button>
+          <button class="btn-danger-action" [disabled]="isRollingBack" (click)="executeRollback()">
+            <span *ngIf="!isRollingBack">Yes, Delete Transactions</span>
+            <span *ngIf="isRollingBack">Deleting...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
