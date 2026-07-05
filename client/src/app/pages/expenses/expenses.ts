@@ -33,6 +33,7 @@ export class Expenses implements OnInit {
   title = '';
   amount = 0;
   category = '';
+  transactionDate = new Date().toISOString().split('T')[0];
   categories: string[] = [];
   errorMessage = '';
   editingId = '';
@@ -78,7 +79,8 @@ export class Expenses implements OnInit {
     const expenseData = {
       title: this.title,
       amount: Number(this.amount),
-      category: this.category
+      category: this.category,
+      transactionDate: this.transactionDate
     };
 
     const request = this.editingId
@@ -90,6 +92,7 @@ export class Expenses implements OnInit {
         this.title = '';
         this.amount = 0;
         this.category = '';
+        this.transactionDate = new Date().toISOString().split('T')[0];
         this.editingId = '';
         // No re-fetch needed — signal already updated via tap()
       },
@@ -104,6 +107,9 @@ export class Expenses implements OnInit {
     this.title = expense.title;
     this.amount = Number(expense.amount);
     this.category = expense.category;
+    this.transactionDate = expense.transactionDate 
+      ? new Date(expense.transactionDate).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0];
     this.errorMessage = '';
   }
 
@@ -112,6 +118,7 @@ export class Expenses implements OnInit {
     this.title = '';
     this.amount = 0;
     this.category = '';
+    this.transactionDate = new Date().toISOString().split('T')[0];
   }
 
   deleteExpense(id: string) {

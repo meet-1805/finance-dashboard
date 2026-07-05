@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -44,6 +44,7 @@ export class ImportConfirmComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private http = inject(HttpClient);
+  private cdr = inject(ChangeDetectorRef);
 
   sessionId = '';
   isLoading = true;
@@ -69,6 +70,7 @@ export class ImportConfirmComponent implements OnInit {
     if (!this.sessionId) {
       this.errorMessage = 'No session ID provided.';
       this.isLoading = false;
+      this.cdr.detectChanges();
       return;
     }
     this.loadSessionData();
@@ -80,54 +82,79 @@ export class ImportConfirmComponent implements OnInit {
 
     this.http.get<SessionResponse>(`${API_BASE_URL}/imports/session/${this.sessionId}`).subscribe({
       next: (response) => {
-        const transactions = response.transactions || [];
-        this.calculateMetrics(transactions);
-        this.isLoading = false;
+        try {
+          const transactions = response.transactions || [];
+          this.calculateMetrics(transactions);
+          
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        } catch (err) {
+          console.error('[ImportConfirm] UNCAUGHT ERROR in next', err);
+        }
       },
       error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = error.error?.message || 'Failed to load confirmation details. Session may have expired.';
+        try {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          this.errorMessage = error.error?.message || 'Failed to load confirmation details. Session may have expired.';
+        } catch (err) {
+          console.error('[ImportConfirm] UNCAUGHT ERROR in error', err);
+        }
       }
     });
   }
 
   calculateMetrics(transactions: ImportTransaction[]): void {
-    this.totalCount = transactions.length;
-    this.importCount = transactions.filter(t => t.approved && !t.duplicate).length;
-    this.skippedCount = transactions.filter(t => !t.approved && !t.duplicate).length;
-    this.duplicateCount = transactions.filter(t => t.duplicate).length;
-    
-    // Count learned rules (Needs Review items that are approved and have manual categories)
-    this.learnedCount = transactions.filter(t => 
-      !t.duplicate && t.approved && t.categoryStatus === 'UNKNOWN' && t.finalCategory
-    ).length;
+    try {
+      this.totalCount = transactions.length;
+      this.importCount = transactions.filter(t => t.approved && !t.duplicate).length;
+      this.skippedCount = transactions.filter(t => !t.approved && !t.duplicate).length;
+      this.duplicateCount = transactions.filter(t => t.duplicate).length;
+      
+      this.learnedCount = transactions.filter(t => 
+        !t.duplicate && t.approved && t.categoryStatus === 'UNKNOWN' && t.finalCategory
+      ).length;
 
-    // Calculate totals
-    this.estimatedIncome = transactions
-      .filter(t => t.approved && !t.duplicate && t.type === 'Income')
-      .reduce((sum, t) => sum + t.amount, 0);
+      this.estimatedIncome = transactions
+        .filter(t => t.approved && !t.duplicate && t.type === 'Income')
+        .reduce((sum, t) => sum + t.amount, 0);
 
-    this.estimatedExpense = transactions
-      .filter(t => t.approved && !t.duplicate && t.type === 'Expense')
-      .reduce((sum, t) => sum + t.amount, 0);
+      this.estimatedExpense = transactions
+        .filter(t => t.approved && !t.duplicate && t.type === 'Expense')
+        .reduce((sum, t) => sum + t.amount, 0);
+    } catch (err) {
+      console.error('[ImportConfirm] UNCAUGHT ERROR in calculateMetrics', err);
+    }
   }
 
   executeImport(): void {
-    if (this.isImporting) return;
+    if (this.isImporting) {
+      return;
+    }
 
     this.isImporting = true;
     this.errorMessage = '';
 
     this.http.post<ConfirmResponse>(`${API_BASE_URL}/imports/confirm`, { sessionId: this.sessionId }).subscribe({
       next: (response) => {
-        this.isImporting = false;
-        this.isSuccess = true;
-        this.importResult = response.summary;
-        this.historyId = response.historyId;
+        try {
+          this.isImporting = false;
+          this.isSuccess = true;
+          this.importResult = response.summary;
+          this.historyId = response.historyId;
+          this.cdr.detectChanges();
+        } catch (err) {
+          console.error('[ImportConfirm] UNCAUGHT ERROR in executeImport next', err);
+        }
       },
       error: (error) => {
-        this.isImporting = false;
-        this.errorMessage = error.error?.message || 'Failed to complete transaction import.';
+        try {
+          this.isImporting = false;
+          this.errorMessage = error.error?.message || 'Failed to complete transaction import.';
+          this.cdr.detectChanges();
+        } catch (err) {
+          console.error('[ImportConfirm] UNCAUGHT ERROR in executeImport error', err);
+        }
       }
     });
   }

@@ -45,9 +45,20 @@ export class ImportComponent {
     const formData = new FormData();
     formData.append('statement', this.selectedFile);
 
-    this.http.post<{ sessionId: string }>(`${API_BASE_URL}/imports/upload`, formData).subscribe({
+    this.http.post<any>(`${API_BASE_URL}/imports/upload`, formData).subscribe({
       next: (response) => {
         this.isLoading = false;
+
+        if (response.status === 'MAPPING_REQUIRED') {
+          const missing = (response.missingSemantics || []).join(', ');
+          this.errorMessage =
+            `Your CSV uses unrecognised column names. ` +
+            `Could not detect: ${missing}. ` +
+            `Please ensure your file has columns for Date, Description, and Debit or Credit amounts.`;
+          return;
+        }
+
+        // SUCCESS — navigate to review
         this.router.navigate(['/import/review', response.sessionId]);
       },
       error: (error) => {

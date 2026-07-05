@@ -27,6 +27,11 @@
         [(ngModel)]="category"
       >
 
+      <input
+        type="date"
+        [(ngModel)]="transactionDate"
+      >
+
       <button (click)="saveIncome()">
         {{ editingId ? 'Update Income' : 'Add Income' }}
       </button>
@@ -55,6 +60,10 @@
         <h2>{{ income.title }}</h2>
 
         <p>{{ income.category }}</p>
+
+        <p class="transaction-date" style="font-size: 0.85em; color: #94a3b8; margin-top: 4px;">
+          {{ income.transactionDate | date:'mediumDate' }}
+        </p>
 
       </div>
 

@@ -31,6 +31,7 @@ export class Income implements OnInit {
   title = '';
   amount = 0;
   category = '';
+  transactionDate = new Date().toISOString().split('T')[0];
   errorMessage = '';
   editingId = '';
 
@@ -66,7 +67,8 @@ export class Income implements OnInit {
     const incomeData = {
       title: this.title,
       amount: Number(this.amount),
-      category: this.category
+      category: this.category,
+      transactionDate: this.transactionDate
     };
 
     const request = this.editingId
@@ -78,6 +80,7 @@ export class Income implements OnInit {
         this.title = '';
         this.amount = 0;
         this.category = '';
+        this.transactionDate = new Date().toISOString().split('T')[0];
         this.editingId = '';
         // No re-fetch needed — signal already updated via tap()
       },
@@ -92,6 +95,9 @@ export class Income implements OnInit {
     this.title = income.title;
     this.amount = Number(income.amount);
     this.category = income.category;
+    this.transactionDate = income.transactionDate 
+      ? new Date(income.transactionDate).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0];
     this.errorMessage = '';
   }
 
@@ -100,6 +106,7 @@ export class Income implements OnInit {
     this.title = '';
     this.amount = 0;
     this.category = '';
+    this.transactionDate = new Date().toISOString().split('T')[0];
   }
 
   deleteIncome(id: string) {

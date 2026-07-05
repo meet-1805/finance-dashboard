@@ -47,6 +47,8 @@
         <div>
           <strong>{{ transaction.title }}</strong>
           <span>{{ transaction.category }}</span>
+          <br>
+          <span style="font-size: 0.85em; color: #94a3b8;">{{ transaction.transactionDate | date:'mediumDate' }}</span>
         </div>
 
         <p [class.expense-text]="transaction.type === 'Expense'">

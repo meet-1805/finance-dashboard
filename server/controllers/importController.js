@@ -73,7 +73,7 @@ exports.confirmImport = async (req, res) => {
                         amount: tx.amount,
                         category: tx.finalCategory,
                         userId: req.user.id,
-                        createdAt: tx.date // Align with transaction date
+                        transactionDate: tx.date
                     });
                     await newIncome.save({ session: dbSession });
                     importedIncomeIds.push(newIncome._id);
@@ -83,7 +83,7 @@ exports.confirmImport = async (req, res) => {
                         amount: tx.amount,
                         category: tx.finalCategory,
                         userId: req.user.id,
-                        createdAt: tx.date // Align with transaction date
+                        transactionDate: tx.date
                     });
                     await newExpense.save({ session: dbSession });
                     importedExpenseIds.push(newExpense._id);
@@ -260,7 +260,25 @@ exports.uploadStatement = async (req, res) => {
 
         const ext = path.extname(req.file.originalname);
         const parser = ParserFactory.getParser(ext);
-        const transactions = await parser.parse(req.file.buffer);
+
+        // parser.parse() now returns a structured result, never a bare array
+        const parseResult = await parser.parse(req.file.buffer);
+
+        // If the parser could not confidently identify required columns,
+        // forward the mapping payload to the client for user-assisted mapping.
+        // HTTP 200 is correct here — the file itself is valid.
+        if (parseResult.status === 'MAPPING_REQUIRED') {
+            return res.status(200).json({
+                status: 'MAPPING_REQUIRED',
+                missingSemantics:  parseResult.missingSemantics,
+                detectedHeaders:   parseResult.detectedHeaders,
+                uncertainHeaders:  parseResult.uncertainHeaders,
+                unmatchedHeaders:  parseResult.unmatchedHeaders
+            });
+        }
+
+        // SUCCESS — extract the normalized transactions array
+        const transactions = parseResult.transactions;
 
         if (transactions.length === 0) {
             return res.status(400).json({ message: "No valid transactions found in statement. Empty sessions cannot be created." });
@@ -271,15 +289,18 @@ exports.uploadStatement = async (req, res) => {
             userId: req.user.id,
             status: 'READY_FOR_REVIEW',
             fileType: 'CSV',
-            parserVersion: '1.0.0',
+            parserVersion: parseResult.report?.parserVersion || '3.0.0',
             totalCount: transactions.length,
             transactions: transactions
         });
 
         res.status(200).json({
+            status: 'SUCCESS',
             sessionId: session._id,
             transactionCount: session.transactions.length,
-            transactions: session.transactions
+            transactions: session.transactions,
+            detectedHeaders: parseResult.detectedHeaders,
+            report: parseResult.report || null
         });
 
     } catch (error) {
@@ -289,6 +310,7 @@ exports.uploadStatement = async (req, res) => {
         });
     }
 };
+
 
 // Phase 2 Get Session Preview Handler
 exports.getSessionPreview = async (req, res) => {

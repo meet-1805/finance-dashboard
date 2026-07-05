@@ -7,13 +7,15 @@ const addExpense = async (req, res) => {
     const {
       title,
       amount,
-      category
+      category,
+      transactionDate
     } = req.body;
 
     const newExpense = new Expense({
       title,
       amount,
       category,
+      transactionDate: transactionDate ? new Date(transactionDate) : Date.now(),
       userId: req.user.id
     });
 
@@ -49,10 +51,10 @@ const getExpenses = async (req, res) => {
       if (!boundaries) {
         return res.status(400).json({ message: "Invalid month or year parameters" });
       }
-      query.createdAt = { $gte: boundaries.startOfPeriod, $lte: boundaries.endOfPeriod };
+      query.transactionDate = { $gte: boundaries.startOfPeriod, $lte: boundaries.endOfPeriod };
     }
 
-    const expenses = await Expense.find(query).sort({ createdAt: -1 });
+    const expenses = await Expense.find(query).sort({ transactionDate: -1 });
 
     res.status(200).json(expenses);
 
@@ -75,19 +77,25 @@ const updateExpense = async (req, res) => {
     const {
       title,
       amount,
-      category
+      category,
+      transactionDate
     } = req.body;
+
+    const updatedData = {
+      title,
+      amount,
+      category
+    };
+    if (transactionDate) {
+      updatedData.transactionDate = new Date(transactionDate);
+    }
 
     const updatedExpense = await Expense.findOneAndUpdate(
       {
         _id: req.params.id,
         userId: req.user.id
       },
-      {
-        title,
-        amount,
-        category
-      },
+      updatedData,
       {
         new: true,
         runValidators: true

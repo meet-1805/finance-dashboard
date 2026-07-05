@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -36,7 +36,7 @@ interface SessionResponse {
 @Component({
   selector: 'app-import-review',
   standalone: true,
-  imports: [CommonModule, RouterLink, SidebarComponent, FormsModule],
+  imports: [CommonModule, RouterLink, SidebarComponent, FormsModule, DatePipe],
   templateUrl: './import-review.html',
   styleUrls: ['./import-review.css']
 })
@@ -45,6 +45,7 @@ export class ImportReviewComponent implements OnInit {
   private router = inject(Router);
   private http = inject(HttpClient);
   private categoryService = inject(CategoryService);
+  private cdr = inject(ChangeDetectorRef);
 
   sessionId = '';
   transactions: ImportTransaction[] = [];
@@ -55,6 +56,8 @@ export class ImportReviewComponent implements OnInit {
   isSaving = false;
   errorMessage = '';
 
+  private initialized = false;
+
   totalCount = 0;
   selectedCount = 0;
   skippedCount = 0;
@@ -64,6 +67,11 @@ export class ImportReviewComponent implements OnInit {
   expandedTransactionId: string | null = null;
 
   ngOnInit(): void {
+    if (this.initialized) {
+      return;
+    }
+    this.initialized = true;
+
     this.sessionId = this.route.snapshot.paramMap.get('sessionId') || '';
     if (!this.sessionId) {
       this.errorMessage = 'No session ID provided.';
@@ -79,7 +87,8 @@ export class ImportReviewComponent implements OnInit {
         this.categories = cats || [];
         this.loadSessionData();
       },
-      error: () => {
+      error: (err) => {
+        console.error('[ImportReview] loadCategories error:', err?.message);
         this.categories = ['Food', 'Groceries', 'Transport', 'Entertainment', 'Bills', 'Shopping', 'Salary', 'Investment', 'Other'];
         this.loadSessionData();
       }
@@ -87,7 +96,6 @@ export class ImportReviewComponent implements OnInit {
   }
 
   loadSessionData(): void {
-    this.isLoading = true;
     this.errorMessage = '';
 
     this.http.get<SessionResponse>(`${API_BASE_URL}/imports/session/${this.sessionId}`).subscribe({
@@ -96,6 +104,7 @@ export class ImportReviewComponent implements OnInit {
         this.checkDuplicates();
       },
       error: (error) => {
+        console.error('[ImportReview] loadSessionData error:', error?.status, error?.error?.message);
         this.isLoading = false;
         this.errorMessage = error.error?.message || 'The import session has expired or does not exist.';
       }
@@ -109,6 +118,7 @@ export class ImportReviewComponent implements OnInit {
         this.categorizeSession();
       },
       error: (error) => {
+        console.error('[ImportReview] checkDuplicates error:', error?.status, error?.error?.message);
         this.isLoading = false;
         this.errorMessage = error.error?.message || 'Failed to perform duplicate check.';
       }
@@ -118,21 +128,33 @@ export class ImportReviewComponent implements OnInit {
   categorizeSession(): void {
     this.http.post<SessionResponse>(`${API_BASE_URL}/imports/session/${this.sessionId}/categorize`, {}).subscribe({
       next: (response) => {
-        this.transactions = response.transactions || [];
+        try {
+          this.transactions = response.transactions || [];
 
-        this.transactions.forEach(tx => {
-          tx.approved = !tx.duplicate;
-          tx.finalCategory = tx.suggestedCategory || '';
-          tx.rememberMerchant = true;
-        });
+          this.transactions.forEach(tx => {
+            tx.approved = !tx.duplicate;
+            tx.finalCategory = tx.suggestedCategory || '';
+            tx.rememberMerchant = true;
+          });
 
-        this.calculateMetrics();
-        this.splitTransactions();
-        this.isLoading = false;
+          this.calculateMetrics();
+          this.splitTransactions();
+
+          this.isLoading = false;
+          this.cdr.detectChanges();
+
+        } catch (err: any) {
+          console.error('[ImportReview] Error processing categorization:', err?.message, err);
+          this.isLoading = false;
+          this.errorMessage = 'An internal error occurred while processing the categorization response.';
+          this.cdr.detectChanges();
+        }
       },
       error: (error) => {
+        console.error('[ImportReview] categorizeSession error:', error?.status, error?.error?.message);
         this.isLoading = false;
         this.errorMessage = error.error?.message || 'Failed to perform automatic categorization.';
+        this.cdr.detectChanges();
       }
     });
   }

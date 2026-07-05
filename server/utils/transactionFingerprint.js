@@ -9,7 +9,7 @@ const crypto = require('crypto');
  * @returns {string} The SHA-256 hash in hex format.
  */
 function generateTransactionFingerprint(transaction) {
-    const dateValue = transaction.date || transaction.createdAt;
+    const dateValue = transaction.date || transaction.transactionDate || transaction.createdAt;
     const date = new Date(dateValue);
     const dateStr = isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0];
     

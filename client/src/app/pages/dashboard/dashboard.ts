@@ -46,7 +46,7 @@ export class Dashboard implements OnInit {
     const expenses = this.transactionService.expenses().map(e => ({ ...e, type: 'Expense' as const }));
     return [...income, ...expenses]
       .sort((a, b) =>
-        new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+        new Date(b.transactionDate || 0).getTime() - new Date(a.transactionDate || 0).getTime()
       )
       .slice(0, 5);
   });

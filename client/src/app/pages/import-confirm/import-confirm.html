@@ -100,6 +100,7 @@
     <!-- Confirmation Summary View -->
     <ng-container *ngIf="!isLoading && !errorMessage && !isSuccess">
       <div class="confirm-card">
+        <p>DEBUG transactions = {{ totalCount }}</p>
         <h2>Summary of Proposed Import Changes</h2>
         <p class="summary-subtitle">Please review the summary stats before running database commits.</p>
 

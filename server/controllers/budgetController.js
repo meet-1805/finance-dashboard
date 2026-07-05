@@ -68,7 +68,7 @@ exports.getBudgets = async (req, res) => {
         // Fetch all expenses for the user in the selected month
         const expenses = await Expense.find({
             userId,
-            createdAt: { $gte: startOfMonth, $lte: endOfMonth }
+            transactionDate: { $gte: startOfMonth, $lte: endOfMonth }
         });
 
         // Calculate utilization for each budget
