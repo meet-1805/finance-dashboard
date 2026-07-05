@@ -1,0 +1,172 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    
+    <!-- Visual Six-Step Progress Indicator -->
+    <div class="progress-indicator">
+      <div class="step completed">
+        <span class="step-num">1</span>
+        <span class="step-name">Upload</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">2</span>
+        <span class="step-name">Preview</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">3</span>
+        <span class="step-name">Duplicates</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">4</span>
+        <span class="step-name">Categorize</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">5</span>
+        <span class="step-name">Review</span>
+      </div>
+      <div class="progress-line active"></div>
+      <div class="step active">
+        <span class="step-num">6</span>
+        <span class="step-name">Import</span>
+      </div>
+    </div>
+
+    <div class="topbar">
+      <h1>Confirm Permanent Database Import</h1>
+    </div>
+
+    <!-- Error View -->
+    <div class="error-container" *ngIf="errorMessage">
+      <div class="error-card">
+        <span class="error-icon">⚠️</span>
+        <h2>Import Operation Failed</h2>
+        <p>{{ errorMessage }}</p>
+        <button class="btn-secondary" routerLink="/import">Return to Upload</button>
+      </div>
+    </div>
+
+    <!-- Loading Details View -->
+    <div class="loading-container" *ngIf="isLoading && !errorMessage">
+      <div class="spinner"></div>
+      <p>Loading import configurations...</p>
+    </div>
+
+    <!-- Success View -->
+    <div class="success-container" *ngIf="isSuccess">
+      <div class="success-card">
+        <span class="success-icon">✓</span>
+        <h2>Import Completed Successfully!</h2>
+        <p>Your transactions have been saved to your active ledger.</p>
+        
+        <div class="result-details">
+          <div class="result-row">
+            <span>Imported Records:</span>
+            <strong>{{ importResult?.importedCount }}</strong>
+          </div>
+          <div class="result-row">
+            <span>Income Created:</span>
+            <strong>{{ importResult?.incomeCount }}</strong>
+          </div>
+          <div class="result-row">
+            <span>Expenses Created:</span>
+            <strong>{{ importResult?.expenseCount }}</strong>
+          </div>
+          <div class="result-row">
+            <span>Skipped Records:</span>
+            <strong>{{ importResult?.skippedCount }}</strong>
+          </div>
+          <div class="result-row">
+            <span>Duplicate Hits:</span>
+            <strong>{{ importResult?.duplicateCount }}</strong>
+          </div>
+          <div class="result-row history-id-row">
+            <span>Import History ID:</span>
+            <span class="history-id">{{ historyId }}</span>
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <button class="btn-success-action btn-dashboard" routerLink="/dashboard">Go to Dashboard</button>
+          <button class="btn-success-action btn-history" routerLink="/import/history">View Import History</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Summary View -->
+    <ng-container *ngIf="!isLoading && !errorMessage && !isSuccess">
+      <div class="confirm-card">
+        <p>DEBUG transactions = {{ totalCount }}</p>
+        <h2>Summary of Proposed Import Changes</h2>
+        <p class="summary-subtitle">Please review the summary stats before running database commits.</p>
+
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span>Total Transactions:</span>
+            <strong>{{ totalCount }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Transactions to Import:</span>
+            <strong class="text-green">{{ importCount }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Skipped Transactions:</span>
+            <strong class="text-orange">{{ skippedCount }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Duplicate Hits:</span>
+            <strong>{{ duplicateCount }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Learned Merchant Rules:</span>
+            <strong class="text-blue">{{ learnedCount }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Estimated Income Total:</span>
+            <strong class="text-green">Rs {{ estimatedIncome }}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Estimated Expense Total:</span>
+            <strong class="text-red">Rs {{ estimatedExpense }}</strong>
+          </div>
+        </div>
+
+        <!-- Warning Area -->
+        <div class="warning-banner">
+          <span class="warning-icon">🚨</span>
+          <div class="warning-text-content">
+            <h4>Important Notice</h4>
+            <p>Executing this import will permanently write records to your live financial history. This operation will commit modifications directly to active balances, reports, and budgets.</p>
+          </div>
+        </div>
+
+        <!-- Import Action Controls -->
+        <div class="confirm-actions">
+          <button 
+            class="btn-back" 
+            [routerLink]="['/import/review', sessionId]"
+            [disabled]="isImporting"
+          >
+            ← Back to Review
+          </button>
+          
+          <button 
+            class="btn-confirm-import" 
+            [disabled]="isImporting"
+            (click)="executeImport()"
+          >
+            <span *ngIf="!isImporting">Commit Import</span>
+            <span *ngIf="isImporting" class="spinner-container">
+              <span class="mini-spinner"></span> Committing changes...
+            </span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

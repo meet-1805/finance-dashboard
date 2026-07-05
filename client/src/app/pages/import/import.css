@@ -1,0 +1,214 @@
+.description {
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 650px;
+}
+
+.import-card {
+  max-width: 500px;
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.file-drop-zone {
+  border: 2px dashed #475569;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  transition: border-color 0.2s;
+  background: #0f172a;
+}
+
+.file-drop-zone:hover {
+  border-color: #3b82f6;
+}
+
+.file-picker-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-picker-label .icon {
+  font-size: 32px;
+}
+
+.file-picker-label .label-text {
+  color: #cbd5e1;
+  font-size: 15px;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+#csvFileInput {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.action-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-upload {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-upload:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+.btn-upload:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #fca5a5;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Spinner Styles */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress Step Indicator */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b;
+  padding: 15px 30px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  border: 1px solid #334155;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  position: relative;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #334155;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.step-name {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.progress-line {
+  flex: 1;
+  height: 3px;
+  background: #334155;
+  margin: 0 10px;
+  z-index: 1;
+}
+
+.step.completed .step-num {
+  background: #22c55e;
+  color: white;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.step.completed .step-name {
+  color: #22c55e;
+}
+
+.progress-line.completed {
+  background: #22c55e;
+}
+
+.step.active .step-num {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}
+
+.step.active .step-name {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.progress-line.active {
+  background: #3b82f6;
+}
+
+@media (max-width: 768px) {
+  .progress-indicator {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .progress-line {
+    display: none;
+  }
+}

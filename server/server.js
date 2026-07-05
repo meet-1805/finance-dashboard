@@ -12,6 +12,7 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const budgetRoutes = require("./routes/budgetRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/userRoutes");
+const importRoutes = require("./routes/importRoutes");
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/budgets", budgetRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/imports", importRoutes);
 
 const PORT = process.env.PORT || 5000;
 

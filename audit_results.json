@@ -1,0 +1,1388 @@
+[
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\components\\month-selector\\month-selector.ts",
+    "line": 37,
+    "match": " any",
+    "content": "onMonthChange(month: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\components\\month-selector\\month-selector.ts",
+    "line": 37,
+    "match": ": any",
+    "content": "onMonthChange(month: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\components\\month-selector\\month-selector.ts",
+    "line": 41,
+    "match": " any",
+    "content": "onYearChange(year: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\components\\month-selector\\month-selector.ts",
+    "line": 41,
+    "match": ": any",
+    "content": "onYearChange(year: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\budgets\\budgets.ts",
+    "line": 65,
+    "match": "console.",
+    "content": "error: (err) => { console.error('Failed to load categories', err); }"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\expenses\\expenses.ts",
+    "line": 66,
+    "match": "console.",
+    "content": "console.error('Failed to load categories', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import\\import.ts",
+    "line": 24,
+    "match": " any",
+    "content": "onFileSelected(event: any): void {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import\\import.ts",
+    "line": 24,
+    "match": ": any",
+    "content": "onFileSelected(event: any): void {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import\\import.ts",
+    "line": 48,
+    "match": "<any>",
+    "content": "this.http.post<any>(`${API_BASE_URL}/imports/upload`, formData).subscribe({"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.html",
+    "line": 54,
+    "match": "DEBUG",
+    "content": "<p>DEBUG instanceId = {{ instanceId }}</p>"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.html",
+    "line": 54,
+    "match": "instanceId",
+    "content": "<p>DEBUG instanceId = {{ instanceId }}</p>"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.html",
+    "line": 55,
+    "match": "DEBUG",
+    "content": "<p>DEBUG isLoading = {{ isLoading }}</p>"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.html",
+    "line": 105,
+    "match": "DEBUG",
+    "content": "<p>DEBUG transactions = {{ totalCount }}</p>"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 55,
+    "match": "console.",
+    "content": "console.trace(`[ImportConfirm-${this.instanceId}] isLoading changed`, value);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 55,
+    "match": "instanceId",
+    "content": "console.trace(`[ImportConfirm-${this.instanceId}] isLoading changed`, value);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 55,
+    "match": "trace(",
+    "content": "console.trace(`[ImportConfirm-${this.instanceId}] isLoading changed`, value);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 63,
+    "match": "instanceId",
+    "content": "public instanceId = ++ImportConfirmComponent.instanceCounter;"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 66,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Component instance initialized`, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 66,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Component instance initialized`, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 67,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Session ID`, this.sessionId);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 67,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Session ID`, this.sessionId);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 68,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (constructor):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 68,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (constructor):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 70,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE true (initial)`, undefined);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 70,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE true (initial)`, undefined);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 71,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER true (initial)`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 71,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER true (initial)`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 73,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later (initial)`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 73,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later (initial)`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 78,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngAfterViewInit, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 78,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngAfterViewInit, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 82,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngAfterViewChecked, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 82,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngAfterViewChecked, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 83,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (ngAfterViewChecked):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 83,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (ngAfterViewChecked):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 87,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngOnDestroy, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 87,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] ngOnDestroy, current isLoading:`, this.isLoading, this);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 104,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] A. ngOnInit entered`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 104,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] A. ngOnInit entered`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 105,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (ngOnInit):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 105,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (ngOnInit):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 107,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] B. sessionId`, this.sessionId);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 107,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] B. sessionId`, this.sessionId);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 111,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 111,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 113,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 114,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 114,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 116,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 116,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 119,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE RETURN in ngOnInit`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 119,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE RETURN in ngOnInit`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 121,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER RETURN in ngOnInit (should not print)`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 121,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER RETURN in ngOnInit (should not print)`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 127,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] C. request started`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 127,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] C. request started`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 128,
+    "match": "console.",
+    "content": "console.time(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 128,
+    "match": "instanceId",
+    "content": "console.time(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 128,
+    "match": "time(",
+    "content": "console.time(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 130,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE true`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 130,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE true`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 132,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER true`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 132,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER true`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 134,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 134,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 142,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] D. request completed`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 142,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] D. request completed`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 143,
+    "match": "console.",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 143,
+    "match": "instanceId",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 143,
+    "match": "timeEnd(",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 144,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] E. response received`, response != null);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 144,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] E. response received`, response != null);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 145,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (next callback):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 145,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] Inside Angular Zone (next callback):`, NgZone.isInAngularZone());"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 148,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] F. statistics calculated`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 148,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] F. statistics calculated`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 149,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] G. isLoading before change`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 149,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] G. isLoading before change`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 151,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 151,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 153,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 154,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 154,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 156,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 156,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 159,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] H. isLoading after change`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 159,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] H. isLoading after change`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 160,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] I. any subsequent HTTP requests: NONE`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 160,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] I. any subsequent HTTP requests: NONE`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 160,
+    "match": " any",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] I. any subsequent HTTP requests: NONE`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 161,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] J. DONE`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 161,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] J. DONE`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 163,
+    "match": "console.",
+    "content": "console.error(`[ImportConfirm-${this.instanceId}] UNCAUGHT ERROR in next`, err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 163,
+    "match": "instanceId",
+    "content": "console.error(`[ImportConfirm-${this.instanceId}] UNCAUGHT ERROR in next`, err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 168,
+    "match": "console.",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 168,
+    "match": "instanceId",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 168,
+    "match": "timeEnd(",
+    "content": "console.timeEnd(`[ImportConfirm-${this.instanceId}] request`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 170,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 170,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] BEFORE false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 172,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 173,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 173,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] AFTER false`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 175,
+    "match": "console.",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 175,
+    "match": "instanceId",
+    "content": "console.log(`[ImportConfirm-${this.instanceId}] 100ms later`, this.isLoading);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 180,
+    "match": "console.",
+    "content": "console.error(`[ImportConfirm-${this.instanceId}] UNCAUGHT ERROR in error`, err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 180,
+    "match": "instanceId",
+    "content": "console.error(`[ImportConfirm-${this.instanceId}] UNCAUGHT ERROR in error`, err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 205,
+    "match": "console.",
+    "content": "console.error('[ImportConfirm] UNCAUGHT ERROR in calculateMetrics', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 211,
+    "match": "console.",
+    "content": "console.log('[ImportConfirm] BEFORE RETURN in executeImport (isImporting=true)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 213,
+    "match": "console.",
+    "content": "console.log('[ImportConfirm] AFTER RETURN in executeImport (should not print)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 226,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 228,
+    "match": "console.",
+    "content": "console.error('[ImportConfirm] UNCAUGHT ERROR in executeImport next', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 235,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-confirm\\import-confirm.ts",
+    "line": 237,
+    "match": "console.",
+    "content": "console.error('[ImportConfirm] UNCAUGHT ERROR in executeImport error', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 73,
+    "match": "console.",
+    "content": "console.warn('[ImportReview] ngOnInit fired a second time — skipping duplicate initialization.');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 88,
+    "match": "console.",
+    "content": "console.log('7 Loading categories');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 91,
+    "match": "console.",
+    "content": "console.time(`process-${this.sessionId}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 91,
+    "match": "time(",
+    "content": "console.time(`process-${this.sessionId}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 95,
+    "match": "console.",
+    "content": "console.log('[ImportReview] loadCategories next — count:', cats?.length ?? 0);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 100,
+    "match": "console.",
+    "content": "console.warn('[ImportReview] loadCategories error (using defaults):', err?.message);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 115,
+    "match": "console.",
+    "content": "console.log('1 Preview loaded — transactions:', response?.transactions?.length ?? 'undefined');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 120,
+    "match": "console.",
+    "content": "console.error('[ImportReview] loadSessionData error:', error?.status, error?.error?.message);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 130,
+    "match": "console.",
+    "content": "console.log('2 Duplicate check completed — transactions:', response?.transactions?.length ?? 'undefined');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 135,
+    "match": "console.",
+    "content": "console.error('[ImportReview] checkDuplicates error:', error?.status, error?.error?.message);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 148,
+    "match": " any",
+    "content": "// isLoading = true forever. This catch surfaces any such silent failure."
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 150,
+    "match": "console.",
+    "content": "console.log('3 Categorization completed — transactions:', response?.transactions?.length ?? 'undefined');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 154,
+    "match": "console.",
+    "content": "console.log('8 Initializing selections — count:', this.transactions.length);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 161,
+    "match": "console.",
+    "content": "console.log('9 Calculating summary');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 164,
+    "match": "console.",
+    "content": "console.log('4 Splitting transactions');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 165,
+    "match": "console.",
+    "content": "console.log('5 Building categorized list');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 166,
+    "match": "console.",
+    "content": "console.log('6 Building review list');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 169,
+    "match": "console.",
+    "content": "console.log('10 Setting loading=false');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 174,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 176,
+    "match": "console.",
+    "content": "console.timeEnd(`process-${this.sessionId}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 176,
+    "match": "timeEnd(",
+    "content": "console.timeEnd(`process-${this.sessionId}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 177,
+    "match": "console.",
+    "content": "console.log('[ImportReview] DONE — categorized:', this.categorizedTransactions.length,"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 181,
+    "match": " any",
+    "content": "} catch (err: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 181,
+    "match": ": any",
+    "content": "} catch (err: any) {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 182,
+    "match": " any",
+    "content": "// Surface any silent runtime error that would otherwise freeze the spinner"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 183,
+    "match": "console.",
+    "content": "console.error('[ImportReview] UNCAUGHT ERROR inside categorizeSession next():', err?.message, err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 186,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 190,
+    "match": "console.",
+    "content": "console.error('[ImportReview] categorizeSession HTTP error:', error?.status, error?.error?.message);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\import-review\\import-review.ts",
+    "line": 193,
+    "match": "detectChanges(",
+    "content": "this.cdr.detectChanges();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\onboarding\\onboarding.ts",
+    "line": 39,
+    "match": " any",
+    "content": "// Try to load any existing categories, otherwise fall back to defaults"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\pages\\onboarding\\onboarding.ts",
+    "line": 47,
+    "match": "console.",
+    "content": "console.error('Failed to load categories', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\budget.ts",
+    "line": 77,
+    "match": "<any>",
+    "content": "deleteBudget(id: string): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\budget.ts",
+    "line": 78,
+    "match": "<any>",
+    "content": "return this.http.delete<any>(`${API_BASE_URL}/budgets/${id}`).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\category.ts",
+    "line": 37,
+    "match": "<any>",
+    "content": "createCategory(name: string): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\category.ts",
+    "line": 38,
+    "match": "<any>",
+    "content": "return this.http.post<any>(`${API_BASE_URL}/categories`, { name });"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 55,
+    "match": "<any>",
+    "content": "addIncome(payload: TransactionPayload): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 56,
+    "match": "<any>",
+    "content": "return this.http.post<any>(`${API_BASE_URL}/income`, payload).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 65,
+    "match": "<any>",
+    "content": "updateIncome(id: string, payload: TransactionPayload): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 66,
+    "match": "<any>",
+    "content": "return this.http.put<any>(`${API_BASE_URL}/income/${id}`, payload).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 77,
+    "match": "<any>",
+    "content": "deleteIncome(id: string): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 78,
+    "match": "<any>",
+    "content": "return this.http.delete<any>(`${API_BASE_URL}/income/${id}`).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 107,
+    "match": "<any>",
+    "content": "addExpense(payload: TransactionPayload): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 108,
+    "match": "<any>",
+    "content": "return this.http.post<any>(`${API_BASE_URL}/expenses`, payload).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 117,
+    "match": "<any>",
+    "content": "updateExpense(id: string, payload: TransactionPayload): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 118,
+    "match": "<any>",
+    "content": "return this.http.put<any>(`${API_BASE_URL}/expenses/${id}`, payload).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 129,
+    "match": "<any>",
+    "content": "deleteExpense(id: string): Observable<any> {"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\app\\services\\transaction.ts",
+    "line": 130,
+    "match": "<any>",
+    "content": "return this.http.delete<any>(`${API_BASE_URL}/expenses/${id}`).pipe("
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\client\\src\\main.ts",
+    "line": 28,
+    "match": "console.",
+    "content": ").catch((err) => console.error(err));"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\config.js",
+    "line": 14,
+    "match": "console.",
+    "content": "console.error('❌ Invalid environment configuration:', error.message);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\expenseController.js",
+    "line": 31,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\expenseController.js",
+    "line": 63,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\expenseController.js",
+    "line": 118,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\expenseController.js",
+    "line": 149,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\incomeController.js",
+    "line": 35,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\incomeController.js",
+    "line": 67,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\incomeController.js",
+    "line": 122,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\controllers\\incomeController.js",
+    "line": 153,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 52,
+    "match": "console.",
+    "content": "console.log('MongoDB Connected\\n');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 54,
+    "match": " any",
+    "content": "const anyIncome = await Income.findOne();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 55,
+    "match": " any",
+    "content": "const userId = anyIncome?.userId || new mongoose.Types.ObjectId();"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 58,
+    "match": "console.",
+    "content": "console.log(`userId: ${userId}  |  transactions: ${N}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 59,
+    "match": "console.",
+    "content": "console.log('═══════════════════════════════════════════════════════════════\\n');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 64,
+    "match": "console.",
+    "content": "console.log('STAGE 1 — Duplicate Detection');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 65,
+    "match": "console.",
+    "content": "console.log('───────────────────────────────────────────────────────────────');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 67,
+    "match": "console.",
+    "content": "console.time('  duplicate detection');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 67,
+    "match": "time(",
+    "content": "console.time('  duplicate detection');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 78,
+    "match": "console.",
+    "content": "console.timeEnd('  duplicate detection');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 78,
+    "match": "timeEnd(",
+    "content": "console.timeEnd('  duplicate detection');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 80,
+    "match": "console.",
+    "content": "console.log(`  Queries: ${q_dup}  (expected: 2)\\n`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 85,
+    "match": "console.",
+    "content": "console.log('STAGE 2A — Categorization BEFORE refactor (N+1 simulation)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 86,
+    "match": "console.",
+    "content": "console.log('───────────────────────────────────────────────────────────────');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 89,
+    "match": "console.",
+    "content": "console.time('  categorization BEFORE');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 89,
+    "match": "time(",
+    "content": "console.time('  categorization BEFORE');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 102,
+    "match": "console.",
+    "content": "console.timeEnd('  categorization BEFORE');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 102,
+    "match": "timeEnd(",
+    "content": "console.timeEnd('  categorization BEFORE');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 104,
+    "match": "console.",
+    "content": "console.log(`  Queries: ${q_cat_old}  (expected: N×2 = ${N * 2})\\n`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 109,
+    "match": "console.",
+    "content": "console.log('STAGE 2B — Categorization AFTER refactor (bulk preload)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 110,
+    "match": "console.",
+    "content": "console.log('───────────────────────────────────────────────────────────────');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 116,
+    "match": "console.",
+    "content": "console.time('  buildContext (Promise.all — 3 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 116,
+    "match": "time(",
+    "content": "console.time('  buildContext (Promise.all — 3 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 118,
+    "match": "console.",
+    "content": "console.timeEnd('  buildContext (Promise.all — 3 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 118,
+    "match": "timeEnd(",
+    "content": "console.timeEnd('  buildContext (Promise.all — 3 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 121,
+    "match": "console.",
+    "content": "console.time('  in-memory categorization loop (0 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 121,
+    "match": "time(",
+    "content": "console.time('  in-memory categorization loop (0 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 127,
+    "match": "console.",
+    "content": "console.timeEnd('  in-memory categorization loop (0 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 127,
+    "match": "timeEnd(",
+    "content": "console.timeEnd('  in-memory categorization loop (0 queries)');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 129,
+    "match": "console.",
+    "content": "console.time('  TOTAL categorization AFTER');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 129,
+    "match": "time(",
+    "content": "console.time('  TOTAL categorization AFTER');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 130,
+    "match": "console.",
+    "content": "console.timeEnd('  TOTAL categorization AFTER');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 130,
+    "match": "timeEnd(",
+    "content": "console.timeEnd('  TOTAL categorization AFTER');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 132,
+    "match": "console.",
+    "content": "console.log(`  Queries in buildContext: ${q_context}  (expected: 3)`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 133,
+    "match": "console.",
+    "content": "console.log(`  Queries in loop: ${q_cat_new - q_context}  (expected: 0)`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 134,
+    "match": "console.",
+    "content": "console.log(`  Total queries: ${q_cat_new}  (expected: 3)\\n`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 163,
+    "match": "console.",
+    "content": "console.log('═══════════════════════════════════════════════════════════════');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 164,
+    "match": "console.",
+    "content": "console.log('BENCHMARK RESULTS — 30 Transactions');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 165,
+    "match": "console.",
+    "content": "console.log('═══════════════════════════════════════════════════════════════');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 166,
+    "match": "console.",
+    "content": "console.log('');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 167,
+    "match": "console.",
+    "content": "console.log('                         BEFORE       AFTER');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 168,
+    "match": "console.",
+    "content": "console.log(`  DB queries             ${String(q_old_total).padStart(6)}      ${String(q_new_total).padStart(6)}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 169,
+    "match": "console.",
+    "content": "console.log(`  Categorization time    ${String(ms_old + 'ms').padStart(6)}    ${String(ms_new + 'ms').padStart(6)}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 170,
+    "match": "console.",
+    "content": "console.log(`  Query reduction        ${queryReduction}%`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 171,
+    "match": "console.",
+    "content": "console.log(`  Speed improvement      ${improvement}%`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 172,
+    "match": "console.",
+    "content": "console.log('');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 173,
+    "match": "console.",
+    "content": "console.log(`  Scalability: BEFORE = O(N)  |  AFTER = O(1)`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 174,
+    "match": "console.",
+    "content": "console.log('═══════════════════════════════════════════════════════════════');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\profile_import.js",
+    "line": 179,
+    "match": "console.",
+    "content": "main().catch(e => { console.error(e); process.exit(1); });"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 8,
+    "match": "console.",
+    "content": "console.log('Connecting to database...');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 13,
+    "match": "console.",
+    "content": "console.log('Connected to MongoDB.');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 17,
+    "match": "console.",
+    "content": "console.log(`Found ${incomes.length} Income records missing transactionDate.`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 22,
+    "match": "console.",
+    "content": "console.log('Income migration complete.');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 26,
+    "match": "console.",
+    "content": "console.log(`Found ${expenses.length} Expense records missing transactionDate.`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 31,
+    "match": "console.",
+    "content": "console.log('Expense migration complete.');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 33,
+    "match": "console.",
+    "content": "console.log('Migration finished successfully.');"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\scripts\\migrate-transaction-dates.js",
+    "line": 36,
+    "match": "console.",
+    "content": "console.error('Migration failed:', err);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\server.js",
+    "line": 27,
+    "match": "console.",
+    "content": "console.log(\"MongoDB Connected\");"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\server.js",
+    "line": 30,
+    "match": "console.",
+    "content": "console.log(error);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\server.js",
+    "line": 57,
+    "match": "console.",
+    "content": "console.log(`Server running on port ${PORT}`);"
+  },
+  {
+    "file": "c:\\Users\\vsmee\\OneDrive\\Desktop\\Main Project 1\\server\\server.js",
+    "line": 62,
+    "match": "console.",
+    "content": "console.error(err);"
+  }
+]

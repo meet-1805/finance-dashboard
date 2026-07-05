@@ -1,0 +1,296 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+    
+    <!-- Visual Six-Step Progress Indicator -->
+    <div class="progress-indicator">
+      <div class="step completed">
+        <span class="step-num">1</span>
+        <span class="step-name">Upload</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">2</span>
+        <span class="step-name">Preview</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">3</span>
+        <span class="step-name">Duplicates</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step completed">
+        <span class="step-num">4</span>
+        <span class="step-name">Categorize</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="step active">
+        <span class="step-num">5</span>
+        <span class="step-name">Review</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="step">
+        <span class="step-num">6</span>
+        <span class="step-name">Import</span>
+      </div>
+    </div>
+
+    <div class="topbar">
+      <h1>Review Imported Statement</h1>
+    </div>
+
+    <!-- Error/Session Expired View -->
+    <div class="error-container" *ngIf="errorMessage">
+      <div class="error-card">
+        <span class="error-icon">⚠️</span>
+        <h2>Session Expired or Invalid</h2>
+        <p>{{ errorMessage }}</p>
+        <button class="btn-primary" routerLink="/import">Return to Upload Page</button>
+      </div>
+    </div>
+
+    <!-- Loading View -->
+    <div class="loading-container" *ngIf="isLoading && !errorMessage">
+      <div class="spinner"></div>
+      <p>Analyzing statement, identifying duplicates and categorizing transactions...</p>
+    </div>
+
+    <!-- Main Review View -->
+    <ng-container *ngIf="!isLoading && !errorMessage">
+      
+      <!-- Top Summary Cards -->
+      <div class="cards">
+        <div class="card total">
+          <h3>Total</h3>
+          <p>{{ totalCount }}</p>
+        </div>
+        <div class="card new">
+          <h3>To Import</h3>
+          <p>{{ selectedCount }}</p>
+        </div>
+        <div class="card duplicate-card">
+          <h3>Duplicate</h3>
+          <p>{{ duplicateCount }}</p>
+        </div>
+        <div class="card skip-card">
+          <h3>Skipped</h3>
+          <p>{{ skippedCount }}</p>
+        </div>
+        <div class="card review-remaining">
+          <h3>Unresolved</h3>
+          <p>{{ needsReviewRemaining }}</p>
+        </div>
+      </div>
+
+      <!-- SECTION 1: Categorized Transactions -->
+      <div class="preview-section margin-bottom">
+        <h2>Categorized Transactions</h2>
+        <p class="section-subtitle">Transactions successfully matched or automatically suggested by the rule engines.</p>
+        <div class="table-container">
+          <table class="transaction-table">
+            <thead>
+              <tr>
+                <th class="import-col-th">Import</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Suggested Category</th>
+                <th>Confidence</th>
+                <th>Source</th>
+                <th>Category Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let tx of categorizedTransactions">
+                <tr 
+                  [class.income-row]="tx.type === 'Income'" 
+                  [class.expense-row]="tx.type === 'Expense'"
+                  [class.duplicate-row]="tx.duplicate"
+                  [class.clickable-row]="tx.duplicate"
+                  (click)="toggleRow(tx)"
+                >
+                  <td class="import-col-td" (click)="$event.stopPropagation()">
+                    <input 
+                      type="checkbox" 
+                      [(ngModel)]="tx.approved" 
+                      (change)="onFieldChange()"
+                      [disabled]="true" 
+                    />
+                  </td>
+                  <td>{{ tx.date | date:'yyyy-MM-dd' }}</td>
+                  <td>{{ tx.description }}</td>
+                  <td class="amount-cell">Rs {{ tx.amount }}</td>
+                  <td>
+                    <span class="badge" [class.badge-income]="tx.type === 'Income'" [class.badge-expense]="tx.type === 'Expense'">
+                      {{ tx.type }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [class.badge-new]="!tx.duplicate" [class.badge-duplicate]="tx.duplicate">
+                      {{ tx.duplicate ? 'Duplicate' : 'New' }}
+                    </span>
+                  </td>
+                  <td>{{ tx.suggestedCategory || '—' }}</td>
+                  <td>
+                    <span 
+                      *ngIf="tx.confidence !== undefined && !tx.duplicate" 
+                      class="badge" 
+                      [class.badge-conf-high]="tx.confidence >= 0.90"
+                      [class.badge-conf-med]="tx.confidence >= 0.60 && tx.confidence < 0.90"
+                      [class.badge-conf-low]="tx.confidence < 0.60"
+                    >
+                      {{ (tx.confidence * 100).toFixed(0) }}%
+                    </span>
+                    <span *ngIf="tx.duplicate || tx.confidence === undefined">—</span>
+                  </td>
+                  <td>{{ tx.duplicate ? '—' : formatSource(tx.categorizationSource) }}</td>
+                  <td>
+                    <span 
+                      *ngIf="tx.categoryStatus && !tx.duplicate" 
+                      class="badge"
+                      [class.badge-status-auto]="tx.categoryStatus === 'AUTO'"
+                      [class.badge-status-review]="tx.categoryStatus === 'REVIEW'"
+                      [class.badge-status-unknown]="tx.categoryStatus === 'UNKNOWN'"
+                    >
+                      {{ tx.categoryStatus }}
+                    </span>
+                    <span *ngIf="tx.duplicate || !tx.categoryStatus">—</span>
+                  </td>
+                </tr>
+
+                <!-- Duplicate Details Sub-Panel -->
+                <tr *ngIf="expandedTransactionId === tx._id" class="details-row">
+                  <td colspan="10">
+                    <div class="details-panel">
+                      <h4>Duplicate Record Information</h4>
+                      <div class="details-grid">
+                        <div>
+                          <strong>Duplicate Type:</strong> {{ tx.duplicateType }}
+                        </div>
+                        <div>
+                          <strong>Matched Collection:</strong> {{ tx.matchedCollection }}
+                        </div>
+                        <div>
+                          <strong>Record ID:</strong> {{ tx.matchedRecordId }}
+                        </div>
+                        <div>
+                          <strong>Fingerprint:</strong> <span class="fp-text" [title]="tx.fingerprint">{{ truncateFingerprint(tx.fingerprint) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+
+              <tr *ngIf="categorizedTransactions.length === 0">
+                <td colspan="10" class="empty-state">No categorized transactions.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Needs Review (Unknown Transactions) -->
+      <div class="preview-section margin-bottom">
+        <h2>Needs Review</h2>
+        <p class="section-subtitle">Transactions with no matching rules. Finalize categories before importing.</p>
+        <div class="table-container">
+          <table class="transaction-table">
+            <thead>
+              <tr>
+                <th class="import-col-th">Import</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Select Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let tx of needsReviewTransactions">
+                <tr [class.income-row]="tx.type === 'Income'" [class.expense-row]="tx.type === 'Expense'">
+                  <td class="import-col-td">
+                    <input 
+                      type="checkbox" 
+                      [(ngModel)]="tx.approved" 
+                      (change)="onFieldChange()"
+                    />
+                  </td>
+                  <td>{{ tx.date | date:'yyyy-MM-dd' }}</td>
+                  <td>{{ tx.description }}</td>
+                  <td class="amount-cell">Rs {{ tx.amount }}</td>
+                  <td>
+                    <span class="badge" [class.badge-income]="tx.type === 'Income'" [class.badge-expense]="tx.type === 'Expense'">
+                      {{ tx.type }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge badge-new">New</span>
+                  </td>
+                  <td>
+                    <div class="category-edit-cell">
+                      <select 
+                        [(ngModel)]="tx.finalCategory" 
+                        (change)="onFieldChange()"
+                        [disabled]="!tx.approved"
+                        class="form-select"
+                      >
+                        <option value="" disabled selected>Select Category</option>
+                        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                      </select>
+                      
+                      <!-- Remember Merchant Option -->
+                      <div class="remember-option" *ngIf="tx.approved && tx.finalCategory">
+                        <label class="remember-label">
+                          <input 
+                            type="checkbox" 
+                            [(ngModel)]="tx.rememberMerchant" 
+                          />
+                          <span>Remember this merchant</span>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+
+              <tr *ngIf="needsReviewTransactions.length === 0">
+                <td colspan="7" class="empty-state">No transactions require review. All items are successfully categorized.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Action Panel & Summary Bar -->
+      <div class="action-panel">
+        <div class="summary-details">
+          <span>Total: <strong>{{ totalCount }}</strong></span>
+          <span>Importing: <strong class="text-green">{{ selectedCount }}</strong></span>
+          <span>Skipped: <strong class="text-orange">{{ skippedCount }}</strong></span>
+          <span>Duplicates: <strong>{{ duplicateCount }}</strong></span>
+          <span *ngIf="needsReviewRemaining > 0" class="warning-text">
+            ⚠️ <strong>{{ needsReviewRemaining }}</strong> unresolved items remaining
+          </span>
+          <span *ngIf="needsReviewRemaining === 0" class="success-text">
+            ✓ Ready to proceed
+          </span>
+        </div>
+        
+        <button 
+          class="btn-continue" 
+          [disabled]="needsReviewRemaining > 0 || isSaving" 
+          (click)="continueToConfirmation()"
+        >
+          <span *ngIf="!isSaving">Save & Continue</span>
+          <span *ngIf="isSaving">Saving...</span>
+        </button>
+      </div>
+
+    </ng-container>
+  </div>
+</div>
