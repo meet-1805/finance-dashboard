@@ -1,0 +1,303 @@
+<div class="page-layout">
+  <app-sidebar></app-sidebar>
+
+  <div class="main-content">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Categories</h1>
+        <p class="page-subtitle">Manage your financial category taxonomy</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" (click)="triggerSeed()" title="Load system taxonomy">
+          🌱 Load Defaults
+        </button>
+        <button class="btn btn-primary" (click)="openCreate()">
+          + New Category
+        </button>
+      </div>
+    </div>
+
+    <!-- Feedback banners -->
+    <div class="alert alert-error"   *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <!-- Search -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Search name, alias, keyword…"
+          [(ngModel)]="searchQuery"
+          class="search-input"
+        />
+        <button *ngIf="searchQuery" class="clear-btn" (click)="searchQuery = ''">✕</button>
+      </div>
+
+      <!-- Type filter chips -->
+      <div class="filter-chips">
+        <button
+          class="chip"
+          [class.chip-active]="filterType === 'All'"
+          (click)="filterType = 'All'"
+        >All</button>
+        <button
+          *ngFor="let t of CATEGORY_TYPES"
+          class="chip"
+          [class.chip-active]="filterType === t"
+          (click)="filterType = t"
+        >{{ t }}</button>
+      </div>
+
+      <!-- View toggle -->
+      <div class="view-toggle">
+        <button [class.active]="viewMode === 'list'" (click)="viewMode = 'list'" title="List view">≡</button>
+        <button [class.active]="viewMode === 'tree'" (click)="viewMode = 'tree'" title="Tree view">⊞</button>
+      </div>
+
+      <!-- Archived toggle -->
+      <label class="toggle-label">
+        <input type="checkbox" [(ngModel)]="showArchived" (change)="load()" />
+        Show archived
+      </label>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-wrap" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Loading categories…</p>
+    </div>
+
+    <!-- ── LIST VIEW ─────────────────────────────────────────────────────── -->
+    <ng-container *ngIf="!isLoading && viewMode === 'list'">
+
+      <div class="categories-grid" *ngIf="filtered.length; else emptyState">
+        <div
+          class="category-card"
+          *ngFor="let cat of filtered"
+          [class.archived]="cat.isArchived"
+        >
+          <!-- Colour stripe -->
+          <div class="card-stripe" [style.background]="cat.colour"></div>
+
+          <div class="card-body">
+            <!-- Top row -->
+            <div class="card-top">
+              <span class="cat-icon">{{ cat.icon }}</span>
+              <div class="cat-meta">
+                <div class="cat-name-row">
+                  <span class="cat-name">{{ cat.name }}</span>
+                  <span *ngIf="cat.isArchived" class="badge badge-archived">Archived</span>
+                  <span *ngIf="cat.isSystem"   class="badge badge-system">System</span>
+                </div>
+                <span class="badge" [class]="typeClass(cat.categoryType)">
+                  {{ cat.categoryType }}
+                </span>
+              </div>
+              <span class="usage-badge" title="Total transaction matches">
+                {{ cat.usageCount }}
+              </span>
+            </div>
+
+            <!-- Description -->
+            <p class="cat-description" *ngIf="cat.description">{{ cat.description }}</p>
+
+            <!-- Keywords -->
+            <div class="tag-row" *ngIf="cat.keywords.length">
+              <span class="tag-label">Keywords:</span>
+              <span class="tag" *ngFor="let kw of cat.keywords.slice(0,5)">{{ kw }}</span>
+              <span class="tag-more" *ngIf="cat.keywords.length > 5">+{{ cat.keywords.length - 5 }}</span>
+            </div>
+
+            <!-- Aliases -->
+            <div class="tag-row" *ngIf="cat.aliases.length">
+              <span class="tag-label">Aliases:</span>
+              <span class="tag tag-alias" *ngFor="let al of cat.aliases.slice(0,3)">{{ al }}</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="card-actions">
+              <button class="btn-icon" (click)="openEditWithRaw(cat)" title="Edit">✏️</button>
+              <button
+                *ngIf="!cat.isArchived && !cat.isSystem"
+                class="btn-icon btn-archive"
+                (click)="archiveCategory(cat)"
+                title="Archive"
+              >📦</button>
+              <button
+                *ngIf="cat.isArchived"
+                class="btn-icon btn-restore"
+                (click)="restoreCategory(cat)"
+                title="Restore"
+              >♻️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── TREE VIEW ─────────────────────────────────────────────────────── -->
+    <ng-container *ngIf="!isLoading && viewMode === 'tree'">
+      <div class="tree-container" *ngIf="roots.length; else emptyState">
+        <div class="tree-parent" *ngFor="let root of roots">
+          <!-- Root node -->
+          <div class="tree-node tree-root" [class.archived]="root.isArchived">
+            <span class="tree-icon" [style.color]="root.colour">{{ root.icon }}</span>
+            <span class="tree-name">{{ root.name }}</span>
+            <span class="badge" [class]="typeClass(root.categoryType)">{{ root.categoryType }}</span>
+            <span class="usage-badge">{{ root.usageCount }}</span>
+            <button class="btn-icon" (click)="openEditWithRaw(root)">✏️</button>
+            <button *ngIf="!root.isArchived && !root.isSystem" class="btn-icon" (click)="archiveCategory(root)">📦</button>
+          </div>
+
+          <!-- Children -->
+          <div class="tree-children" *ngIf="hasChildren(root._id)">
+            <div
+              class="tree-node tree-child"
+              *ngFor="let child of childrenOf(root._id)"
+              [class.archived]="child.isArchived"
+            >
+              <span class="tree-connector">└─</span>
+              <span class="tree-icon" [style.color]="child.colour">{{ child.icon }}</span>
+              <span class="tree-name">{{ child.name }}</span>
+              <span class="usage-badge">{{ child.usageCount }}</span>
+              <button class="btn-icon" (click)="openEditWithRaw(child)">✏️</button>
+              <button *ngIf="!child.isArchived && !child.isSystem" class="btn-icon" (click)="archiveCategory(child)">📦</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Empty state -->
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <p>No categories found.</p>
+        <button class="btn btn-secondary" (click)="triggerSeed()">🌱 Load Default Taxonomy</button>
+      </div>
+    </ng-template>
+
+  </div><!-- /main-content -->
+
+  <!-- ── CREATE FORM PANEL ──────────────────────────────────────────────── -->
+  <div class="form-overlay" *ngIf="showCreateForm || showEditForm" (click)="closeForm()"></div>
+
+  <div class="form-panel" *ngIf="showCreateForm || showEditForm">
+    <div class="form-panel-header">
+      <h2>{{ showCreateForm ? 'New Category' : (editingCategory?.isSystem ? 'Edit System Category' : 'Edit Category') }}</h2>
+      <button class="close-btn" (click)="closeForm()">✕</button>
+    </div>
+
+    <div class="form-panel-body">
+
+      <!-- Name -->
+      <div class="form-group" *ngIf="!editingCategory?.isSystem">
+        <label>Name *</label>
+        <input type="text" [(ngModel)]="form.name" class="form-input" placeholder="e.g. Groceries" />
+      </div>
+
+      <!-- System name (read-only) -->
+      <div class="form-group" *ngIf="editingCategory?.isSystem">
+        <label>Name</label>
+        <input type="text" [value]="editingCategory?.name" class="form-input" readonly />
+        <small class="hint">System category names cannot be changed.</small>
+      </div>
+
+      <!-- Category Type -->
+      <div class="form-group">
+        <label>Type</label>
+        <select [(ngModel)]="form.categoryType" class="form-input">
+          <option value="Expense">Expense</option>
+          <option value="Income">Income</option>
+          <option value="Transfer">Transfer</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+
+      <!-- Parent -->
+      <div class="form-group">
+        <label>Parent Category <span class="optional">(optional)</span></label>
+        <select [(ngModel)]="form.parentId" class="form-input">
+          <option [value]="null">— None (root category) —</option>
+          <option *ngFor="let p of parentOptions()" [value]="p._id">
+            {{ p.icon }} {{ p.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Icon picker -->
+      <div class="form-group">
+        <label>Icon</label>
+        <div class="icon-grid">
+          <button
+            *ngFor="let ic of ICONS"
+            class="icon-btn"
+            [class.selected]="form.icon === ic"
+            (click)="form.icon = ic"
+            type="button"
+          >{{ ic }}</button>
+        </div>
+      </div>
+
+      <!-- Colour picker -->
+      <div class="form-group">
+        <label>Colour</label>
+        <div class="colour-row">
+          <div
+            *ngFor="let col of COLOURS"
+            class="colour-swatch"
+            [class.selected]="form.colour === col"
+            [style.background]="col"
+            (click)="form.colour = col"
+          ></div>
+        </div>
+        <div class="colour-preview-row">
+          <span class="colour-preview" [style.background]="form.colour"></span>
+          <input type="text" [(ngModel)]="form.colour" class="form-input colour-hex" placeholder="#6B7280" maxlength="7" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label>Description <span class="optional">(optional)</span></label>
+        <textarea [(ngModel)]="form.description" class="form-input" rows="2" placeholder="Brief description…"></textarea>
+      </div>
+
+      <!-- Keywords -->
+      <div class="form-group">
+        <label>Keywords <span class="optional">(comma-separated)</span></label>
+        <input type="text" [(ngModel)]="keywordsRaw" class="form-input" placeholder="e.g. grocery, supermarket, mart" />
+        <small class="hint">Used for automatic categorization during statement import.</small>
+      </div>
+
+      <!-- Aliases -->
+      <div class="form-group">
+        <label>Aliases <span class="optional">(comma-separated)</span></label>
+        <input type="text" [(ngModel)]="aliasesRaw" class="form-input" placeholder="e.g. Food Shopping, Supermarket Run" />
+        <small class="hint">Alternate display names for this category.</small>
+      </div>
+
+      <!-- Display Order -->
+      <div class="form-group">
+        <label>Display Order</label>
+        <input type="number" [(ngModel)]="form.displayOrder" class="form-input" min="0" />
+      </div>
+
+      <!-- Error -->
+      <div class="alert alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button class="btn btn-secondary" (click)="closeForm()">Cancel</button>
+        <button class="btn btn-primary" (click)="showCreateForm ? saveCreate() : saveEdit()">
+          {{ showCreateForm ? 'Create Category' : 'Save Changes' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

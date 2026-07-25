@@ -87,6 +87,13 @@ export const routes: Routes = [
   },
 
   {
+    path: 'categories',
+    loadComponent: () =>
+      import('./pages/categories/categories').then((m) => m.CategoriesPage),
+    canActivate: [authGuard]
+  },
+
+  {
     path: '**',
     redirectTo: ''
   }
